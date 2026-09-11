@@ -1,0 +1,234 @@
+{
+  "main": {
+    "id": "91f2a706c6125c27",
+    "type": "split",
+    "children": [
+      {
+        "id": "b955fedca493de5e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ab89fb7f4482462d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Les fondements de la stratégie d'entreprise/1 - Informations.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "1 - Informations"
+            }
+          },
+          {
+            "id": "672ebc4647597a23",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Les fondements de la stratégie d'entreprise/2 - Introduction.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2 - Introduction"
+            }
+          },
+          {
+            "id": "3f3b8a775ae565ad",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Néèrlandais/2 - Découverte de la langue.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2 - Découverte de la langue"
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d0819a2c2fcc2cb7",
+    "type": "split",
+    "children": [
+      {
+        "id": "6540fb11b708488e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c6cb9cc268c378b5",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorateur de fichiers"
+            }
+          },
+          {
+            "id": "a9a1140d7d8f1520",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Rechercher"
+            }
+          },
+          {
+            "id": "a0b57e9977bf9c31",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Signets"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "655aec69e02890cf",
+    "type": "split",
+    "children": [
+      {
+        "id": "e297a107b425c617",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7e8347f8786f3664",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Les fondements de la stratégie d'entreprise/3 - Qu'est-ce que la stratégie.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Rétroliens"
+            }
+          },
+          {
+            "id": "a79cc5c84405ba6e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Les fondements de la stratégie d'entreprise/3 - Qu'est-ce que la stratégie.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Liens sortants"
+            }
+          },
+          {
+            "id": "4729d6a297addb61",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Mots-clés"
+            }
+          },
+          {
+            "id": "ea80a86688c8fe62",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Toutes les propriétés"
+            }
+          },
+          {
+            "id": "319e414bb83a5c1f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Les fondements de la stratégie d'entreprise/3 - Qu'est-ce que la stratégie.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Plan"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Ouvrir le sélecteur rapide": false,
+      "graph:Ouvrir la vue graphique": false,
+      "canvas:Créer une nouvelle toile": false,
+      "daily-notes:Ouvrir la note quotidienne": false,
+      "templates:Insérer le modèle": false,
+      "command-palette:Ouvrir la palette de commandes": false,
+      "bases:Créer une nouvelle base": false
+    }
+  },
+  "active": "3f3b8a775ae565ad",
+  "lastOpenFiles": [
+    "23798 2.gif",
+    "23798 1.gif",
+    "23798.gif",
+    "Néèrlandais/1 - Informations.md",
+    "Néèrlandais/2 - Découverte de la langue.md",
+    "Les fondements de la stratégie d'entreprise/3 - Qu'est-ce que la stratégie.md",
+    "Néèrlandais",
+    "Les fondements de la stratégie d'entreprise/2 - Introduction.md",
+    "SWOT_fr.svg.webp",
+    "Les fondements de la stratégie d'entreprise/1 - Informations.md",
+    "Les fondements de la stratégie d'entreprise"
+  ]
+}
