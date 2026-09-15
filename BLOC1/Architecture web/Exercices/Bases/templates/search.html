@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div>
+    {% if data %}
+
+    <p>Résultats pour la recherche : {{data}}</p>
+    {% else %}
+    <p>La recherche est vide. Veuillez ajouter '?q=motcle' dans l'URL.</p>
+
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{ bootstrap.load_css() }}
+    <title>Document</title>
+</head>
+
+<body>
+    {% from 'bootstrap5/nav.html' import render_nav_item %}
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    {{ render_nav_item('home', 'Accueil') }}
+                    {{ render_nav_item('user', 'Utilisateurs') }}
+                    {{render_nav_item('search', 'Recherche')}}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {{ bootstrap.load_js() }}
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Page d'acceuil</h1>
+<div>
+    {% if name %}
+    {% if age < 18 %} <p style="color:brown ;">
+        Attention utilisateur mineur ! </p>
+        {% else %}
+        <p style="color:green">Utilisateur majeur</p>
+        {% endif %}
+
+        <p>Profil : {{name}}</p>
+        <p>Age : {{age}}</p>
+        {% endif%}
+</div>
+
+{% endblock %}
