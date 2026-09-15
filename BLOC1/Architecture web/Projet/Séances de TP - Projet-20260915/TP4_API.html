@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tp4 Api</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <style>
+        body {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .container {
+            max-width: 1000px;
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #0d6efd;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        h1 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 1rem;
+        }
+        p, li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        code {
+            background-color: #f1f3f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: #c7254e;
+            font-size: 90%;
+        }
+        pre {
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+        blockquote {
+            border-left: 5px solid #0d6efd;
+            background-color: #e7f1ff;
+            padding: 1rem 1.5rem;
+            border-radius: 0 5px 5px 0;
+            margin-bottom: 2rem;
+        }
+        .code-reveal {
+            margin-bottom: 2rem;
+        }
+        .code-reveal .btn {
+            margin-bottom: 0.5rem;
+        }
+        .code-reveal pre {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="tp-4-api-rest-et-authentification-jwt">TP 4 : API REST et Authentification JWT</h1>
+<h2 id="contexte">Contexte</h2>
+<p>Votre application est fonctionnelle, sécurisée et persistante. Mais elle ne communique qu'avec un navigateur via du HTML.</p>
+<p>Dans ce TP, vous allez ouvrir FeatureHub au monde extérieur en exposant une <strong>API REST</strong> complète (filtrage, pagination, tous les verbes HTTP) et la protéger avec des <strong>tokens JWT</strong>.</p>
+<h2 id="objectifs">Objectifs</h2>
+<ol>
+<li>Implémenter des filtres et tris dynamiques sur la page d'accueil.</li>
+<li>Exposer les données via une <strong>API REST versionnée</strong> (<code>/api/v1/</code>) respectant les conventions REST.</li>
+<li>Implémenter le <strong>CRUD complet</strong> via l'API : GET, POST, PUT, PATCH, DELETE.</li>
+<li>Sécuriser les opérations d'écriture avec des <strong>tokens JWT</strong> (Bearer Token).</li>
+</ol>
+<hr />
+<h2 id="exercice-1-filtres-et-tri-dynamiques">Exercice 1 : Filtres et Tri Dynamiques</h2>
+<p><strong>Tâche :</strong>
+Permettre à l'utilisateur de filtrer et trier la liste des demandes sur la page d'accueil.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>
+<p>Dans <code>index.html</code>, ajoutez un formulaire de recherche (<code>method="GET"</code>) au-dessus de la grille de cartes, avec des listes déroulantes pour :
+   - Nature (Tous, Feature, Bug, Amélioration)
+   - Statut (Tous, En attente, Validé, Rejeté)
+   - Priorité (Toutes, Haute, Moyenne, Basse)
+   - Tri (Date décroissante, Date croissante, Titre A-Z, Priorité)</p>
+</li>
+<li>
+<p>Dans la route <code>index</code>, récupérez ces paramètres via <code>request.args.get()</code> et construisez votre requête SQLAlchemy dynamiquement :</p>
+</li>
+</ol>
+<div class="code-reveal"><button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#python-block-1" aria-expanded="false" aria-controls="python-block-1">💡 Voir la solution</button><div class="collapse" id="python-block-1"><pre><code class="language-python">query = FeatureRequest.query
+
+nature = request.args.get('nature')
+if nature:
+    query = query.filter_by(nature=nature)
+
+sort = request.args.get('sort', 'date_desc')
+if sort == 'title_asc':
+    query = query.order_by(FeatureRequest.title.asc())
+else:
+    query = query.order_by(FeatureRequest.created_at.desc())
+
+features = query.all()
+</code></pre></div></div>
+<ol start="3">
+<li><strong>Persistance des filtres</strong> : Passez les valeurs actuelles au template pour que les listes déroulantes conservent la sélection après soumission.</li>
+<li>Ajoutez un lien "Réinitialiser les filtres" pointant vers <code>url_for('main.index')</code> sans paramètres.</li>
+</ol>
+<hr />
+<h2 id="exercice-2-blueprint-api-et-endpoints-de-lecture-get">Exercice 2 : Blueprint API et Endpoints de Lecture (GET)</h2>
+<p><strong>Tâche :</strong>
+Exposer les données de FeatureHub via une API REST versionnée en JSON, dans un Blueprint dédié.</p>
+<blockquote>
+<p><strong>REST (Representational State Transfer)</strong> repose sur des conventions : les <strong>ressources</strong> sont identifiées par des URI (<code>/api/v1/features</code>), manipulées via les <strong>verbes HTTP</strong> (GET pour lire, POST pour créer, etc.), et les réponses utilisent des <strong>codes de statut</strong> standard (200, 201, 404...).</p>
+</blockquote>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li><strong>Blueprint</strong> : Créez <code>app/api/routes.py</code> avec un Blueprint <code>api</code> préfixé par <code>/api/v1</code>. Enregistrez-le dans <code>create_app()</code>.</li>
+</ol>
+<blockquote>
+<p><strong>Versioning</strong> : Le préfixe <code>/v1/</code> permet de faire évoluer l'API sans briser les clients existants. Si demain vous changez le format des réponses, vous créez <code>/api/v2/</code> pendant que <code>/api/v1/</code> continue de fonctionner.</p>
+</blockquote>
+<ol start="2">
+<li><strong>Méthode <code>to_dict()</code></strong> : Dans votre modèle <code>FeatureRequest</code>, ajoutez une méthode qui convertit l'objet en dictionnaire :</li>
+</ol>
+<div class="code-reveal"><button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#python-block-2" aria-expanded="false" aria-controls="python-block-2">💡 Voir la solution</button><div class="collapse" id="python-block-2"><pre><code class="language-python">def to_dict(self):
+    return {
+        'id': self.id,
+        'title': self.title,
+        'description': self.description,
+        'status': self.status,
+        'nature': self.nature,
+        'priority': self.priority,
+        'created_at': self.created_at.isoformat(),
+        'author': self.author.username if self.author else None
+    }
+</code></pre></div></div>
+<ol start="3">
+<li><strong>Fonction d'erreur structurée</strong> : Créez une fonction utilitaire pour retourner des erreurs cohérentes. Les clients de votre API ont besoin de réponses <strong>toujours en JSON</strong>, jamais en HTML — même en cas d'erreur.</li>
+</ol>
+<div class="code-reveal"><button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#python-block-3" aria-expanded="false" aria-controls="python-block-3">💡 Voir la solution</button><div class="collapse" id="python-block-3"><pre><code class="language-python">def make_error(status_code, message, field=None):
+    response = {'error': message, 'code': status_code}
+    if field:
+        response['field'] = field
+    return jsonify(response), status_code
+</code></pre></div></div>
+<ol start="4">
+<li><strong>GET <code>/api/v1/features</code></strong> : Créez une route qui retourne la liste avec filtrage, tri et pagination :</li>
+</ol>
+<div class="code-reveal"><button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#python-block-4" aria-expanded="false" aria-controls="python-block-4">💡 Voir la solution</button><div class="collapse" id="python-block-4"><pre><code class="language-python">@api.route('/features')
+def get_features():
+    # Filtrage
+    nature = request.args.get('nature')
+    status = request.args.get('status')
+    # Tri
+    sort = request.args.get('sort', 'created_at')
+    order = request.args.get('order', 'desc')
+    # Pagination
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+
+    query = FeatureRequest.query
+    if nature:
+        query = query.filter_by(nature=nature)
+    if status:
+        query = query.filter_by(status=status)
+
+    column = getattr(FeatureRequest, sort, None)
+    if column:
+        query = query.order_by(column.desc() if order == 'desc' else column.asc())
+
+    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+    return jsonify({
+        'total': pagination.total,
+        'page': pagination.page,
+        'pages': pagination.pages,
+        'per_page': pagination.per_page,
+        'data': [f.to_dict() for f in pagination.items]
+    })
+</code></pre></div></div>
+<ol start="5">
+<li><strong>GET <code>/api/v1/features/&lt;int:id&gt;</code></strong> : Retournez une seule demande ou une erreur 404 en JSON :</li>
+</ol>
+<div class="code-reveal"><button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#python-block-5" aria-expanded="false" aria-controls="python-block-5">💡 Voir la solution</button><div class="collapse" id="python-block-5"><pre><code class="language-python">@api.route('/features/&lt;int:id&gt;')
+def get_feature(id):
+    feature = FeatureRequest.query.get(id)
+    if not feature:
+        return make_error(404, 'Demande introuvable')
+    return jsonify(feature.to_dict())
+</code></pre></div></div>
+<ol start="6">
+<li>Testez dans le navigateur : <code>http://localhost:5000/api/v1/features</code> et <code>http://localhost:5000/api/v1/features?nature=Bug&amp;page=1&amp;per_page=5</code>.</li>
+</ol>
+<hr />
+<h2 id="exercice-3-creation-via-lapi-post">Exercice 3 : Création via l'API (POST)</h2>
+<p><strong>Tâche :</strong>
+Permettre à un client externe de créer une demande en envoyant du JSON.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li><strong>POST <code>/api/v1/features</code></strong> : Récupérez les données avec <code>request.get_json()</code> et validez le titre :</li>
+</ol>
+<div class="code-reveal"><button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#python-block-6" aria-expanded="false" aria-controls="python-block-6">💡 Voir la solution</button><div class="collapse" id="python-block-6"><pre><code class="language-python">@api.route('/features', methods=['POST'])
+def create_feature():
+    data = request.get_json() or {}
+    if not data.get('title'):
+        return make_error(400, 'Le titre est requis', 'title')
+
+    feature = FeatureRequest(
+        title=data['title'],
+        description=data.get('description', ''),
+        nature=data.get('nature', 'Feature'),
+        priority=data.get('priority', 'Moyenne'),
+        status='En attente',
+        author_id=1  # À remplacer en Exercice 5 avec l'identité JWT
+    )
+    db.session.add(feature)
+    db.session.commit()
+    return jsonify(feature.to_dict()), 201
+</code></pre></div></div>
+<ol start="2">
+<li>Testez avec <code>curl</code> :</li>
+</ol>
+<pre><code class="language-bash">curl -X POST http://127.0.0.1:5000/api/v1/features \
+     -H &quot;Content-Type: application/json&quot; \
+     -d '{&quot;title&quot;: &quot;Dark Mode&quot;, &quot;priority&quot;: &quot;Haute&quot;}'
+</code></pre>
+<ol start="3">
+<li>Vérifiez que la réponse contient un code 201 et les données de la demande créée.</li>
+<li>Testez aussi le cas d'erreur : envoyez une requête sans <code>title</code> et vérifiez le JSON d'erreur retourné.</li>
+</ol>
+<hr />
+<h2 id="exercice-4-mettre-a-jour-une-ressource-put-et-patch">Exercice 4 : Mettre à Jour une Ressource (PUT et PATCH)</h2>
+<p><strong>Tâche :</strong>
+Implémenter les deux méthodes de mise à jour et comprendre leur différence fondamentale.</p>
+<blockquote>
+<p><strong>PUT</strong> remplace <strong>entièrement</strong> la ressource : tout champ non fourni revient à sa valeur par défaut. <strong>PATCH</strong> modifie <strong>partiellement</strong> : seuls les champs fournis sont mis à jour, les autres restent inchangés.</p>
+</blockquote>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li><strong>PUT <code>/api/v1/features/&lt;int:id&gt;</code></strong> — Remplacement total :</li>
+</ol>
+<div class="code-reveal"><button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#python-block-7" aria-expanded="false" aria-controls="python-block-7">💡 Voir la solution</button><div class="collapse" id="python-block-7"><pre><code class="language-python">@api.route('/features/&lt;int:id&gt;', methods=['PUT'])
+def update_feature_put(id):
+    feature = FeatureRequest.query.get(id)
+    if not feature:
+        return make_error(404, 'Demande introuvable')
+
+    data = request.get_json() or {}
+    if not data.get('title'):
+        return make_error(400, 'Le titre est requis pour un remplacement complet', 'title')
+
+    # Le PUT écrase tout. Ce qui n'est pas fourni revient à la valeur par défaut.
+    feature.title = data['title']
+    feature.description = data.get('description', '')
+    feature.nature = data.get('nature', 'Feature')
+    feature.priority = data.get('priority', 'Moyenne')
+    feature.status = data.get('status', 'En attente')
+
+    db.session.commit()
+    return jsonify(feature.to_dict())
+</code></pre></div></div>
+<ol start="2">
+<li><strong>PATCH <code>/api/v1/features/&lt;int:id&gt;</code></strong> — Modification partielle :</li>
+</ol>
+<div class="code-reveal"><button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#python-block-8" aria-expanded="false" aria-controls="python-block-8">💡 Voir la solution</button><div class="collapse" id="python-block-8"><pre><code class="language-python">@api.route('/features/&lt;int:id&gt;', methods=['PATCH'])
+def update_feature_patch(id):
+    feature = FeatureRequest.query.get(id)
+    if not feature:
+        return make_error(404, 'Demande introuvable')
+
+    data = request.get_json() or {}
+
+    # Le PATCH ne modifie que ce qui est fourni
+    if 'title' in data:
+        feature.title = data['title']
+    if 'description' in data:
+        feature.description = data['description']
+    if 'priority' in data:
+        feature.priority = data['priority']
+    if 'status' in data:
+        feature.status = data['status']
+
+    db.session.commit()
+    return jsonify(feature.to_dict())
+</code></pre></div></div>
+<ol start="3">
+<li><strong>Vérifiez la différence</strong> avec ces deux tests :
+   - Envoyez un <code>PATCH</code> avec uniquement <code>{"status": "Validé"}</code> → vérifiez que le <code>title</code> n'a pas changé.
+   - Envoyez un <code>PUT</code> avec uniquement <code>{"title": "Nouveau titre"}</code> → vérifiez que <code>description</code> est devenu <code>""</code> et <code>priority</code> est revenu à sa valeur par défaut.</li>
+</ol>
+<hr />
+<h2 id="exercice-5-suppression-et-authentification-jwt">Exercice 5 : Suppression et Authentification JWT</h2>
+<p><strong>Tâche :</strong>
+Implémenter la suppression d'une ressource et protéger toutes les opérations d'écriture avec des tokens JWT.</p>
+<blockquote>
+<p><strong>Pourquoi JWT et non Flask-Login ?</strong> Flask-Login s'appuie sur les cookies et maintient un état côté serveur — ce qui viole le principe <strong>stateless</strong> de REST. Un client mobile ne gère pas les cookies de la même façon qu'un navigateur. Avec les <strong>tokens JWT</strong>, l'état est entièrement côté client : chaque requête est autonome et contient ses propres credentials dans le header <code>Authorization</code>.</p>
+</blockquote>
+<h3 id="partie-a-configurer-flask-jwt-extended">Partie A : Configurer Flask-JWT-Extended</h3>
+<ol>
+<li>
+<p>Installez la librairie : <code>pip install Flask-JWT-Extended</code>. Mettez à jour <code>requirements.txt</code>.</p>
+</li>
+<li>
+<p>Dans <code>create_app()</code>, configurez l'extension :</p>
+</li>
+</ol>
+<div class="code-reveal"><button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#python-block-9" aria-expanded="false" aria-controls="python-block-9">💡 Voir la solution</button><div class="collapse" id="python-block-9"><pre><code class="language-python">from flask_jwt_extended import JWTManager
+
+app.config['JWT_SECRET_KEY'] = 'changez-moi-en-production'
+jwt = JWTManager(app)
+</code></pre></div></div>
+<h3 id="partie-b-route-de-login-obtention-du-token">Partie B : Route de login (obtention du token)</h3>
+<ol start="3">
+<li>Créez la route <code>POST /api/v1/auth/token</code> dans votre Blueprint api :</li>
+</ol>
+<div class="code-reveal"><button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#python-block-10" aria-expanded="false" aria-controls="python-block-10">💡 Voir la solution</button><div class="collapse" id="python-block-10"><pre><code class="language-python">from flask_jwt_extended import create_access_token
+from app.models import User
+from werkzeug.security import check_password_hash
+
+@api.route('/auth/token', methods=['POST'])
+def get_token():
+    data = request.get_json() or {}
+    username = data.get('username')
+    password = data.get('password')
+
+    user = User.query.filter_by(username=username).first()
+    if not user or not check_password_hash(user.password_hash, password):
+        return make_error(401, 'Identifiants invalides')
+
+    token = create_access_token(identity=username)
+    return jsonify(access_token=token), 200
+</code></pre></div></div>
+<h3 id="partie-c-proteger-les-routes-decriture">Partie C : Protéger les routes d'écriture</h3>
+<ol start="4">
+<li>Ajoutez <code>@jwt_required()</code> sur vos routes POST, PUT, PATCH, et DELETE. Exemple pour le POST :</li>
+</ol>
+<div class="code-reveal"><button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#python-block-11" aria-expanded="false" aria-controls="python-block-11">💡 Voir la solution</button><div class="collapse" id="python-block-11"><pre><code class="language-python">from flask_jwt_extended import jwt_required, get_jwt_identity
+
+@api.route('/features', methods=['POST'])
+@jwt_required()
+def create_feature():
+    current_username = get_jwt_identity()
+    user = User.query.filter_by(username=current_username).first()
+    # ... reste du code, utilisez user.id comme author_id
+</code></pre></div></div>
+<h3 id="partie-d-implementer-delete">Partie D : Implémenter DELETE</h3>
+<ol start="5">
+<li><strong>DELETE <code>/api/v1/features/&lt;int:id&gt;</code></strong> — Supprime la ressource et retourne <strong>204 No Content</strong> (succès sans corps de réponse) :</li>
+</ol>
+<div class="code-reveal"><button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#python-block-12" aria-expanded="false" aria-controls="python-block-12">💡 Voir la solution</button><div class="collapse" id="python-block-12"><pre><code class="language-python">@api.route('/features/&lt;int:id&gt;', methods=['DELETE'])
+@jwt_required()
+def delete_feature(id):
+    feature = FeatureRequest.query.get(id)
+    if not feature:
+        return make_error(404, 'Demande introuvable')
+    db.session.delete(feature)
+    db.session.commit()
+    return '', 204
+</code></pre></div></div>
+<blockquote>
+<p><strong>Pourquoi 204 et pas 200 ?</strong> Le code 200 implique un corps de réponse. Après une suppression, il n'y a plus rien à retourner. Le code 204 signifie "succès, mais pas de contenu".</p>
+</blockquote>
+<h3 id="partie-e-tester-le-flux-complet">Partie E : Tester le flux complet</h3>
+<ol start="6">
+<li>Testez avec <code>curl</code> en trois étapes :</li>
+</ol>
+<pre><code class="language-bash"># Étape 1 : Obtenir un token
+curl -X POST http://localhost:5000/api/v1/auth/token \
+     -H &quot;Content-Type: application/json&quot; \
+     -d '{&quot;username&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;votre_mot_de_passe&quot;}'
+
+# Étape 2 : Créer une feature avec le token
+curl -X POST http://localhost:5000/api/v1/features \
+     -H &quot;Content-Type: application/json&quot; \
+     -H &quot;Authorization: Bearer VOTRE_TOKEN_ICI&quot; \
+     -d '{&quot;title&quot;: &quot;Feature protégée&quot;, &quot;priority&quot;: &quot;Haute&quot;}'
+
+# Étape 3 : Vérifier qu'un DELETE sans token est refusé
+curl -X DELETE http://localhost:5000/api/v1/features/1
+# → Doit retourner 401
+</code></pre>
+<hr />
+<h2 id="recapitulatif-des-endpoints">Récapitulatif des Endpoints</h2>
+<table>
+<thead>
+<tr>
+<th>Méthode</th>
+<th>URI</th>
+<th>Description</th>
+<th>Auth</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/auth/token</code></td>
+<td>Obtenir un token JWT</td>
+<td>—</td>
+<td>200</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/features</code></td>
+<td>Lister (filtres, tri, pagination)</td>
+<td>—</td>
+<td>200</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/features</code></td>
+<td>Créer une demande</td>
+<td>JWT</td>
+<td>201</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/features/&lt;id&gt;</code></td>
+<td>Détails d'une demande</td>
+<td>—</td>
+<td>200</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/api/v1/features/&lt;id&gt;</code></td>
+<td>Remplacer entièrement</td>
+<td>JWT</td>
+<td>200</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td><code>/api/v1/features/&lt;id&gt;</code></td>
+<td>Modifier partiellement</td>
+<td>JWT</td>
+<td>200</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/api/v1/features/&lt;id&gt;</code></td>
+<td>Supprimer</td>
+<td>JWT</td>
+<td>204</td>
+</tr>
+</tbody>
+</table>
+        <div class="mt-5 text-center">
+            <a href="index.html" class="btn btn-outline-secondary">Retour au sommaire</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script>
+        document.querySelectorAll('.code-reveal [data-bs-toggle="collapse"]').forEach(function(btn) {
+            var target = document.querySelector(btn.getAttribute('data-bs-target'));
+            if (target) {
+                target.addEventListener('show.bs.collapse', function() {
+                    btn.textContent = '✕ Masquer la solution';
+                });
+                target.addEventListener('hide.bs.collapse', function() {
+                    btn.textContent = '💡 Voir la solution';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

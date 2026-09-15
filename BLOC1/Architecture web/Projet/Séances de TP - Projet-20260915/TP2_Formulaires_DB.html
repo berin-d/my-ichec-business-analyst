@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tp2 Formulaires Db</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <style>
+        body {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .container {
+            max-width: 1000px;
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #0d6efd;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        h1 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 1rem;
+        }
+        p, li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        code {
+            background-color: #f1f3f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: #c7254e;
+            font-size: 90%;
+        }
+        pre {
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            background-color: #f8f9fa; /* Match highlight.js github theme if needed, or let hljs handle it */
+        }
+        blockquote {
+            border-left: 5px solid #0d6efd;
+            background-color: #e7f1ff;
+            padding: 1rem 1.5rem;
+            border-radius: 0 5px 5px 0;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="tp-2-formulaires-et-base-de-donnees">TP 2 : Formulaires et Base de Données</h1>
+<h2 id="contexte">Contexte</h2>
+<p>Votre application affiche des données statiques codées en dur dans Python. Dans ce TP, vous allez permettre aux utilisateurs d'ajouter leurs propres demandes via un formulaire.
+Pour que ces données ne soient pas perdues à chaque redémarrage du serveur, vous connecterez ensuite votre application à une base de données <strong>SQLite</strong> avec l'ORM <strong>SQLAlchemy</strong>, et vous implémenterez le cycle CRUD complet (Create, Read, Update, Delete).</p>
+<h2 id="objectifs">Objectifs</h2>
+<ol>
+<li>Créer un formulaire HTML et gérer sa soumission en POST.</li>
+<li>Valider les données côté serveur et informer l'utilisateur via des "Flash Messages".</li>
+<li>Installer et configurer Flask-SQLAlchemy.</li>
+<li>Modéliser la donnée <code>FeatureRequest</code> avec horodatage.</li>
+<li>Implémenter le cycle CRUD complet (Créer, Lire, Modifier, Supprimer).</li>
+<li>Gérer l'upload de fichiers de manière sécurisée.</li>
+</ol>
+<hr />
+<h2 id="exercice-1-le-formulaire-dajout-validation-et-messages-flash">Exercice 1 : Le Formulaire d'Ajout, Validation et Messages Flash</h2>
+<p><strong>Tâche :</strong>
+Créez une page avec un formulaire, validez les données soumises côté serveur et informez l'utilisateur du résultat.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>Ajoutez un bouton "Ajouter une demande" sur <code>index.html</code>.</li>
+<li>Créez une nouvelle route <code>/feature/add</code> acceptant les méthodes <code>['GET', 'POST']</code>.</li>
+<li><strong>En GET</strong> : Retournez un template <code>add_feature.html</code> contenant un <code>&lt;form method="POST"&gt;</code> avec les champs : Titre, Description (textarea), Nature (liste déroulante : Feature, Bug, Amélioration) et Priorité (Haute, Moyenne, Basse).</li>
+<li><strong>En POST</strong> (<code>request.method == 'POST'</code>) :<ul>
+<li>Récupérez les données avec <code>request.form.get()</code>.</li>
+<li><strong>Validez les données</strong> : vérifiez que le titre n'est pas vide et qu'il ne dépasse pas 100 caractères. Si la validation échoue, affichez un message d'erreur avec <code>flash("...", "danger")</code> et ré-affichez le formulaire.</li>
+<li>Si tout est valide, affichez temporairement les données dans la console avec un <code>print()</code>.</li>
+<li>Lancez un message de succès : <code>flash("Demande ajoutée !", "success")</code>. <em>(Nécessite une <code>SECRET_KEY</code> dans app.py !)</em></li>
+<li>Redirigez vers l'accueil (<code>redirect(url_for('index'))</code>).</li>
+</ul>
+</li>
+<li>Dans <code>base.html</code>, ajoutez le code nécessaire pour afficher les messages flash sous forme d'alertes Bootstrap (avec la classe correspondant à la catégorie : <code>success</code>, <code>danger</code>, <code>warning</code>...).</li>
+</ol>
+<blockquote>
+<p><strong>Pattern Post-Redirect-Get (PRG)</strong> : Remarquez que lors d'un POST réussi, on ne retourne pas directement un template — on <strong>redirige</strong> vers une autre page. Cela empêche l'utilisateur de re-soumettre le formulaire s'il rafraîchit la page. C'est un pattern standard du développement web.</p>
+</blockquote>
+<hr />
+<h2 id="exercice-2-configuration-de-la-base-de-donnees-et-modele">Exercice 2 : Configuration de la Base de Données et Modèle</h2>
+<p><strong>Tâche :</strong>
+Préparer la base locale pour stocker de façon pérenne les demandes.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>Installez <code>flask-sqlalchemy</code> dans votre environnement. Mettez à jour votre <code>requirements.txt</code>.</li>
+<li>Dans <code>app.py</code>, configurez <code>app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///featurehub.db'</code> et initialisez <code>db = SQLAlchemy(app)</code>.</li>
+<li>Créez une classe <code>FeatureRequest</code> héritant de <code>db.Model</code> avec :<ul>
+<li><code>id</code> : Integer, Primary Key.</li>
+<li><code>title</code> : String(100), non vide.</li>
+<li><code>description</code> : Text.</li>
+<li><code>status</code> : String, défaut "En attente".</li>
+<li><code>nature</code> : String, défaut "Feature".</li>
+<li><code>priority</code> : String, défaut "Moyenne".</li>
+<li><code>created_at</code> : DateTime, avec une valeur par défaut automatique.</li>
+<li>Ajoutez un attribut <code>__tablename__ = 'feature_requests'</code> pour nommer explicitement la table.</li>
+<li>Ajoutez une méthode <code>__repr__</code> pour faciliter le débogage (ex: <code>&lt;FeatureRequest 1: Dark Mode&gt;</code>).</li>
+</ul>
+</li>
+</ol>
+<p><em>Astuce pour le champ <code>created_at</code> :</em></p>
+<pre><code class="language-python">from datetime import datetime
+
+class FeatureRequest(db.Model):
+    __tablename__ = 'feature_requests'
+
+    # ... colonnes ...
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'&lt;FeatureRequest {self.id}: {self.title}&gt;'
+</code></pre>
+<ol start="4">
+<li>Pour créer le fichier <code>.db</code> au démarrage, appelez <code>db.create_all()</code> dans un bloc de contexte d'application.</li>
+</ol>
+<blockquote>
+<p><strong>Vérification SQL</strong> : Après la création de la base, vous pouvez inspecter la structure générée par l'ORM en ouvrant le fichier <code>.db</code> avec le CLI sqlite3 :</p>
+<p><code>sqlite3 instance/featurehub.db
+.tables
+.schema feature_requests</code></p>
+<p>Comparez le <code>CREATE TABLE</code> généré avec la définition de votre modèle Python.</p>
+</blockquote>
+<hr />
+<h2 id="exercice-3-persistance-des-donnees-creation-lecture">Exercice 3 : Persistance des Données (Création &amp; Lecture)</h2>
+<p><strong>Tâche :</strong>
+Lier votre formulaire à la base de données et afficher les données persistées.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li><strong>Route Add (Écriture)</strong> :<ul>
+<li>Dans votre bloc POST, remplacez le <code>print</code> en instanciant un nouvel objet <code>FeatureRequest</code> avec les données reçues.</li>
+<li>Ajoutez-le à la session : <code>db.session.add(votre_objet)</code>.</li>
+<li>Sauvegardez en protégeant la transaction :</li>
+</ul>
+</li>
+</ol>
+<pre><code class="language-python">try:
+    db.session.add(votre_objet)
+    db.session.commit()
+    flash(&quot;Demande ajoutée !&quot;, &quot;success&quot;)
+except Exception:
+    db.session.rollback()
+    flash(&quot;Erreur lors de l'enregistrement.&quot;, &quot;danger&quot;)
+</code></pre>
+<ol start="2">
+<li><strong>Route Index (Lecture)</strong> :<ul>
+<li>Supprimez vos fausses données en dur.</li>
+<li>Récupérez toutes les demandes de la base, triées par date de création décroissante (les plus récentes en premier) :</li>
+</ul>
+</li>
+</ol>
+<pre><code class="language-python">features = FeatureRequest.query.order_by(FeatureRequest.created_at.desc()).all()
+</code></pre>
+<ol start="3">
+<li><strong>Gestion de la liste vide</strong> : Dans <code>index.html</code>, si la liste de features est vide, affichez un message invitant l'utilisateur à créer sa première demande (avec un lien vers le formulaire d'ajout) au lieu d'afficher une page vide.</li>
+<li><strong>Affichage de la date</strong> : Sur chaque carte, affichez la date de création formatée.</li>
+</ol>
+<p><em>Astuce : Jinja2 permet d'utiliser le filtre <code>strftime</code> sur un objet datetime :</em></p>
+<pre><code class="language-html">{{ feature.created_at.strftime('%d/%m/%Y à %H:%M') }}
+</code></pre>
+<p><strong>Vérification :</strong> Ajoutez une demande via le formulaire, puis redémarrez votre serveur. La demande doit persister !</p>
+<hr />
+<h2 id="exercice-4-page-de-details">Exercice 4 : Page de Détails</h2>
+<p><strong>Tâche :</strong>
+Créer une page dédiée à l'affichage complet d'une seule demande via son ID.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>Créez une route <code>/feature/&lt;int:id&gt;</code>. Ce paramètre dynamique <code>id</code> vous permet d'identifier quelle demande afficher.</li>
+<li>Dans la fonction, requêtez la demande correspondante avec SQLAlchemy (<code>FeatureRequest.query.get_or_404(id)</code>).</li>
+<li>Passez cet objet à un nouveau template <code>view_feature.html</code> qui affiche tous les champs de la demande (titre, description, statut, nature, priorité, date de création).</li>
+<li>Dans <code>index.html</code>, transformez le titre de chaque carte en un lien dirigeant vers la page de détails de la carte en question.</li>
+</ol>
+<hr />
+<h2 id="exercice-5-modification-dune-demande-update">Exercice 5 : Modification d'une Demande (Update)</h2>
+<p><strong>Tâche :</strong>
+Permettre de modifier une demande existante via un formulaire pré-rempli.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>Créez une route <code>/feature/&lt;int:id&gt;/edit</code> acceptant les méthodes <code>['GET', 'POST']</code>.</li>
+<li>Récupérez la demande par son ID (<code>get_or_404</code>).</li>
+<li><strong>En GET</strong> : Affichez un template <code>edit_feature.html</code> contenant un formulaire <strong>pré-rempli</strong> avec les valeurs actuelles de la demande (attribut <code>value</code> pour les champs texte, <code>selected</code> pour les listes déroulantes).</li>
+<li><strong>En POST</strong> :<ul>
+<li>Récupérez les nouvelles valeurs du formulaire.</li>
+<li>Appliquez la même validation que dans l'exercice 1 (titre requis, longueur max).</li>
+<li>Mettez à jour les attributs de l'objet existant (pas besoin de <code>db.session.add()</code>, l'objet est déjà suivi par SQLAlchemy).</li>
+<li>Sauvegardez avec <code>db.session.commit()</code>.</li>
+<li>Redirigez vers la page de détails de la demande.</li>
+</ul>
+</li>
+<li>Ajoutez un bouton "Modifier" sur la page de détails (<code>view_feature.html</code>) qui mène vers cette route.</li>
+</ol>
+<blockquote>
+<p><strong>Astuce :</strong> Vous pouvez réutiliser une grande partie du HTML du formulaire d'ajout. Si vous voulez factoriser, créez un template partiel <code>_form.html</code> inclus par <code>add_feature.html</code> et <code>edit_feature.html</code>.</p>
+</blockquote>
+<hr />
+<h2 id="exercice-6-suppression-dune-demande-delete">Exercice 6 : Suppression d'une Demande (Delete)</h2>
+<p><strong>Tâche :</strong>
+Permettre de supprimer une demande existante, avec une confirmation pour éviter les suppressions accidentelles.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>Créez une route <code>/feature/&lt;int:id&gt;/delete</code> acceptant <strong>uniquement</strong> la méthode <code>POST</code>.</li>
+<li>Récupérez la demande par son ID, supprimez-la (<code>db.session.delete(feature)</code>) et sauvegardez (<code>db.session.commit()</code>).</li>
+<li>Affichez un message flash de confirmation et redirigez vers l'accueil.</li>
+<li>Sur la page de détails, ajoutez un bouton "Supprimer" dans un petit formulaire <code>&lt;form method="POST"&gt;</code> pointant vers la route de suppression.</li>
+</ol>
+<blockquote>
+<p><strong>Pourquoi POST et pas GET ?</strong> Une requête GET ne doit jamais modifier des données. Un simple lien <code>&lt;a href="/feature/1/delete"&gt;</code> pourrait être suivi par un robot d'indexation ou par un pré-chargement du navigateur, ce qui supprimerait des données involontairement. En utilisant POST, on s'assure que la suppression est une action intentionnelle.</p>
+</blockquote>
+<p><em>Challenge optionnel : ajoutez une modale Bootstrap de confirmation ("Êtes-vous sûr ?") qui s'affiche au clic sur le bouton Supprimer, avant de soumettre le formulaire.</em></p>
+<hr />
+<h2 id="exercice-7-upload-de-fichiers-pieces-jointes">Exercice 7 : Upload de Fichiers (Pièces Jointes)</h2>
+<p><strong>Tâche :</strong>
+Permettre à l'utilisateur de joindre une image ou un document (spécification technique, capture d'écran du bug) à sa demande, de manière sécurisée.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li><strong>Modèle</strong> : Ajoutez une colonne <code>filename</code> (String, nullable) à votre modèle <code>FeatureRequest</code>. Recréez la base de données (supprimez le fichier <code>.db</code> et relancez).</li>
+<li><strong>Configuration</strong> : Dans <code>app.py</code>, configurez le dossier de destination, la taille maximale autorisée et les extensions acceptées :</li>
+</ol>
+<pre><code class="language-python">app.config['UPLOAD_FOLDER'] = 'static/uploads'
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024  # 2 Mo max
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+</code></pre>
+<p>Assurez-vous que le dossier <code>static/uploads</code> existe.</p>
+<ol start="3">
+<li><strong>HTML</strong> :<ul>
+<li>Modifiez le formulaire dans <code>add_feature.html</code> pour supporter l'envoi de fichiers : ajoutez l'attribut <code>enctype="multipart/form-data"</code> à la balise <code>&lt;form&gt;</code>.</li>
+<li>Ajoutez un champ <code>&lt;input type="file" name="file" class="form-control"&gt;</code>.</li>
+</ul>
+</li>
+<li><strong>Backend (Route Add)</strong> :<ul>
+<li>Lors de la soumission en POST, récupérez le fichier avec <code>file = request.files.get('file')</code>.</li>
+<li>Si un fichier est présent et qu'il a un nom, vérifiez que son extension est autorisée avec <code>allowed_file()</code>. Si l'extension n'est pas autorisée, affichez un message flash d'erreur.</li>
+<li>Si le fichier est valide, sécurisez son nom (<code>from werkzeug.utils import secure_filename</code>) et sauvegardez-le dans <code>app.config['UPLOAD_FOLDER']</code>.</li>
+<li>Enregistrez le nom du fichier dans l'objet <code>FeatureRequest</code> avant le <code>db.session.commit()</code>.</li>
+</ul>
+</li>
+<li><strong>Affichage</strong> : Dans la page de détails (<code>view_feature.html</code>), si la demande possède un <code>filename</code> :<ul>
+<li>S'il s'agit d'une image (png, jpg, gif), affichez-la directement avec une balise <code>&lt;img&gt;</code>.</li>
+<li>Sinon, affichez un lien de téléchargement.</li>
+</ul>
+</li>
+</ol>
+        <div class="mt-5 text-center">
+            <a href="index.html" class="btn btn-outline-secondary">Retour au sommaire</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

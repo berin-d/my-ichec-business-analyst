@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tp3 Mvc Auth</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <style>
+        body {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .container {
+            max-width: 1000px;
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #0d6efd;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        h1 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 1rem;
+        }
+        p, li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        code {
+            background-color: #f1f3f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: #c7254e;
+            font-size: 90%;
+        }
+        pre {
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            background-color: #f8f9fa; /* Match highlight.js github theme if needed, or let hljs handle it */
+        }
+        blockquote {
+            border-left: 5px solid #0d6efd;
+            background-color: #e7f1ff;
+            padding: 1rem 1.5rem;
+            border-radius: 0 5px 5px 0;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="tp-3-architecture-et-securite">TP 3 : Architecture et Sécurité</h1>
+<h2 id="contexte">Contexte</h2>
+<p>Votre application fonctionne, mais tout le code est dans un seul fichier <code>app.py</code> et n'importe qui peut ajouter, modifier ou supprimer des demandes.
+Dans ce TP, vous allez d'abord <strong>restructurer</strong> l'application selon le pattern MVC avec les Blueprints Flask, puis <strong>sécuriser</strong> l'accès en ajoutant un système d'inscription et de connexion.</p>
+<h2 id="objectifs">Objectifs</h2>
+<ol>
+<li>Restructurer l'application en modules (Application Factory, Blueprints, <code>models.py</code>).</li>
+<li>Mettre en place <strong>Flask-Login</strong> et gérer les utilisateurs.</li>
+<li>Créer les routes Register / Login / Logout.</li>
+<li>Adapter l'interface selon l'état de connexion.</li>
+<li>Lier les tables <code>User</code> et <code>FeatureRequest</code> (Relation One-to-Many).</li>
+<li>Protéger les routes et vérifier les permissions.</li>
+</ol>
+<hr />
+<h2 id="exercice-1-refactorisation-de-larchitecture-mvc-factory-et-blueprints">Exercice 1 : Refactorisation de l'Architecture (MVC, Factory et Blueprints)</h2>
+<p><strong>Tâche :</strong>
+Séparer le code monolithique en modules selon le pattern <strong>Model-View-Controller</strong> (MVC) : les modèles dans leur fichier, les routes dans des Blueprints, et la création de l'application dans une Factory.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li><strong>Structure du projet</strong> : Créez un package <code>app/</code> à la racine de votre projet avec l'arborescence suivante :</li>
+</ol>
+<pre><code>featureHub_app/
+├── run.py                  # Point d'entrée
+├── app/
+│   ├── __init__.py         # Application Factory
+│   ├── models.py           # Modèles SQLAlchemy
+│   ├── main/
+│   │   └── routes.py       # Blueprint principal (index, view, edit, delete)
+│   ├── templates/
+│   │   ├── base.html
+│   │   ├── main/           # Templates du blueprint main
+│   │   │   ├── index.html
+│   │   │   ├── view_feature.html
+│   │   │   └── ...
+│   │   └── auth/           # Templates du blueprint auth (exercice 3)
+│   └── static/
+│       └── css/
+</code></pre>
+<ol start="2">
+<li><strong>Modèles (<code>app/models.py</code>)</strong> : Déplacez votre classe <code>FeatureRequest</code> et l'instance <code>db = SQLAlchemy()</code> dans ce fichier. Attention : <code>db</code> est créé <strong>sans</strong> l'application (pas de <code>SQLAlchemy(app)</code>), il sera lié plus tard via <code>db.init_app(app)</code>.</li>
+<li><strong>Application Factory (<code>app/__init__.py</code>)</strong> : Définissez une fonction <code>create_app()</code> qui :<ul>
+<li>Crée l'instance <code>app = Flask(__name__)</code>.</li>
+<li>Configure la <code>SECRET_KEY</code> et la <code>SQLALCHEMY_DATABASE_URI</code>.</li>
+<li>Initialise la base de données : <code>db.init_app(app)</code>.</li>
+<li>Crée les tables si elles n'existent pas encore, dans un contexte applicatif explicite :</li>
+</ul>
+</li>
+</ol>
+<pre><code class="language-python">with app.app_context():
+    db.create_all()
+</code></pre>
+<blockquote>
+<p><strong>Pourquoi <code>app_context</code> ?</strong> Flask-SQLAlchemy a besoin de savoir à quelle application il est rattaché pour accéder à la configuration (URI, etc.). En dehors d'une requête HTTP, ce contexte n'existe pas automatiquement : il faut le créer manuellement avec <code>with app.app_context()</code>. Sans cela, tout appel à <code>db</code> lèvera une erreur <code>RuntimeError: No application found</code>.</p>
+</blockquote>
+<pre><code>- Enregistre les Blueprints.
+- Retourne l'instance `app`.
+</code></pre>
+<ol start="4">
+<li><strong>Blueprint principal (<code>app/main/routes.py</code>)</strong> : Créez un Blueprint nommé <code>main</code> et déplacez-y toutes vos routes actuelles (index, add, view, edit, delete), en remplaçant <code>@app.route</code> par <code>@main.route</code>.</li>
+<li><strong>Point d'entrée (<code>run.py</code>)</strong> : À la racine du projet, créez le fichier de lancement :</li>
+</ol>
+<pre><code class="language-python">from app import create_app
+
+app = create_app()
+
+if __name__ == '__main__':
+    app.run(debug=True)
+</code></pre>
+<ol start="6">
+<li><strong>Mise à jour des <code>url_for</code></strong> : Avec les Blueprints, tous les appels <code>url_for</code> doivent être préfixés par le nom du Blueprint. Mettez à jour vos templates :</li>
+</ol>
+<pre><code class="language-html">&lt;!-- Avant --&gt;
+&lt;a href=&quot;{{ url_for('index') }}&quot;&gt;Accueil&lt;/a&gt;
+
+&lt;!-- Après --&gt;
+&lt;a href=&quot;{{ url_for('main.index') }}&quot;&gt;Accueil&lt;/a&gt;
+</code></pre>
+<ol start="7">
+<li>Testez votre application pour vérifier que tout fonctionne comme avant.</li>
+</ol>
+<blockquote>
+<p><strong>Pourquoi cette restructuration ?</strong> C'est le pattern <strong>MVC</strong> (Model-View-Controller) : les modèles gèrent les données (<code>models.py</code>), les vues sont les templates Jinja2 (<code>templates/</code>), et les contrôleurs sont les routes Flask (<code>routes.py</code>). Séparer ces responsabilités rend le code maintenable et facilite le travail en équipe.</p>
+</blockquote>
+<hr />
+<h2 id="exercice-2-le-modele-utilisateur">Exercice 2 : Le Modèle Utilisateur</h2>
+<blockquote>
+<p><strong>Pourquoi a-t-on besoin de tout ça ?</strong> HTTP est un protocole <strong>sans état</strong> (<em>stateless</em>) : chaque requête est indépendante, le serveur ne se souvient pas de la précédente. Pour reconnaître un utilisateur entre deux requêtes, on utilise un <strong>cookie de session</strong> — le serveur y stocke un identifiant chiffré. Flask-Login gère ce mécanisme automatiquement : à chaque requête, il lit le cookie, charge l'utilisateur correspondant depuis la base de données, et le rend disponible via <code>current_user</code>.</p>
+</blockquote>
+<p><strong>Tâche :</strong>
+Préparez la base de données pour accueillir des utilisateurs, avec un hachage sécurisé des mots de passe.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>Dans <code>app/models.py</code>, créez une classe <code>User</code> héritant de <strong><code>UserMixin</code></strong> (fourni par Flask-Login) et de <code>db.Model</code> :<ul>
+<li><code>id</code> : Integer, Primary Key.</li>
+<li><code>username</code> : String(80), Unique, non nullable.</li>
+<li><code>password_hash</code> : String(128).</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p><strong><code>UserMixin</code></strong> fournit automatiquement les propriétés requises par Flask-Login : <code>is_authenticated</code>, <code>is_active</code>, <code>is_anonymous</code> et <code>get_id()</code>. Sans lui, Flask-Login ne pourra pas gérer vos utilisateurs.</p>
+</blockquote>
+<ol start="2">
+<li>Ajoutez deux méthodes utilitaires au modèle <code>User</code> pour encapsuler la logique de hachage :</li>
+</ol>
+<pre><code class="language-python">from werkzeug.security import generate_password_hash, check_password_hash
+
+def set_password(self, password):
+    self.password_hash = generate_password_hash(password)
+
+def check_password(self, password):
+    return check_password_hash(self.password_hash, password)
+</code></pre>
+<ol start="3">
+<li><strong>Callback <code>user_loader</code></strong> : Dans <code>app/__init__.py</code>, configurez <code>LoginManager</code> et définissez la fonction qui permet à Flask-Login de recharger un utilisateur depuis la base de données à chaque requête :</li>
+</ol>
+<pre><code class="language-python">from flask_login import LoginManager
+
+login_manager = LoginManager()
+
+def create_app():
+    # ... configuration existante ...
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+</code></pre>
+<ol start="4">
+<li>Mettez à jour votre base de données (supprimez le <code>.db</code> et relancez pour recréer les tables).</li>
+</ol>
+<hr />
+<h2 id="exercice-3-inscription-et-connexion">Exercice 3 : Inscription et Connexion</h2>
+<p><strong>Tâche :</strong>
+Permettre aux visiteurs de se créer un compte et de se connecter.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li><strong>Blueprint Auth</strong> : Créez un fichier <code>app/auth/routes.py</code> avec un Blueprint nommé <code>auth</code>. Enregistrez-le dans <code>create_app()</code>.</li>
+<li><strong>Configuration de la redirection</strong> : Dans <code>create_app()</code>, indiquez à Flask-Login où rediriger les utilisateurs non connectés :</li>
+</ol>
+<pre><code class="language-python">login_manager.login_view = 'auth.login'
+login_manager.login_message = 'Veuillez vous connecter pour accéder à cette page.'
+login_manager.login_message_category = 'warning'
+</code></pre>
+<ol start="3">
+<li><strong>Route Register (<code>/register</code>)</strong> :<ul>
+<li>En GET : Affichez un formulaire (Username, Password, Confirmation du password) dans <code>templates/auth/register.html</code>.</li>
+<li>En POST : Validez les données (username non vide, mot de passe de 4 caractères minimum, confirmation identique). Si le username existe déjà, affichez un flash d'erreur. Sinon, créez le <code>User</code> en utilisant <code>set_password()</code> et sauvegardez-le en base.</li>
+</ul>
+</li>
+<li><strong>Route Login (<code>/login</code>)</strong> :<ul>
+<li>En GET : Affichez un formulaire de connexion dans <code>templates/auth/login.html</code>.</li>
+<li>En POST : Cherchez le user par username. Vérifiez le mot de passe avec <code>check_password()</code>. Si OK, connectez-le avec <code>login_user(user)</code> et redirigez vers l'accueil. Sinon, affichez un flash d'erreur.</li>
+</ul>
+</li>
+<li><strong>Route Logout (<code>/logout</code>)</strong> :<ul>
+<li>Appelez <code>logout_user()</code>, affichez un flash de confirmation et redirigez vers l'accueil.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="exercice-4-navbar-dynamique-authentification">Exercice 4 : Navbar Dynamique (Authentification)</h2>
+<p><strong>Tâche :</strong>
+Adapter la barre de navigation selon l'état de connexion de l'utilisateur.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>Dans <code>base.html</code>, utilisez <code>current_user.is_authenticated</code> pour afficher conditionnellement :<ul>
+<li><strong>Si connecté</strong> : le nom d'utilisateur (<code>current_user.username</code>) et un lien "Déconnexion".</li>
+<li><strong>Si non connecté</strong> : des liens "Connexion" et "Inscription".</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p><strong><code>current_user</code></strong> est un objet global fourni par Flask-Login, accessible dans tous vos templates sans avoir besoin de le passer via <code>render_template</code>. Il représente l'utilisateur de la session en cours (ou un utilisateur anonyme si non connecté).</p>
+</blockquote>
+<ol start="2">
+<li>Testez le flux complet : inscrivez un utilisateur, connectez-vous, vérifiez que la Navbar change, déconnectez-vous.</li>
+</ol>
+<hr />
+<h2 id="exercice-5-relation-auteur-demande">Exercice 5 : Relation Auteur-Demande</h2>
+<p><strong>Tâche :</strong>
+Chaque demande doit appartenir à un utilisateur enregistré, et cette information doit être visible dans l'interface.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li><strong>Modèle</strong> : Dans <code>app/models.py</code>, modifiez <code>FeatureRequest</code> pour ajouter une clé étrangère <code>author_id</code> liée à <code>user.id</code>.</li>
+<li><strong>Relation</strong> : Ajoutez une relation <code>db.relationship</code> dans <code>User</code> pour pouvoir accéder facilement à <code>user.features</code>, avec un <code>backref='author'</code> qui ajoute un attribut <code>feature.author</code> sur chaque demande.</li>
+</ol>
+<pre><code class="language-python"># Dans User :
+features = db.relationship('FeatureRequest', backref='author', lazy=True)
+
+# Dans FeatureRequest :
+author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+</code></pre>
+<ol start="3">
+<li><strong>Contrôleur (<code>app/main/routes.py</code>)</strong> : Modifiez la route d'ajout (<code>add_feature</code>) :<ul>
+<li>Protégez-la avec le décorateur <code>@login_required</code>.</li>
+<li>Lors de la création de la <code>FeatureRequest</code>, assignez automatiquement l'auteur : <code>author_id=current_user.id</code>.</li>
+</ul>
+</li>
+<li><strong>Templates</strong> : Sur les cartes de l'accueil et la page de détails, affichez le nom de l'auteur (ex: "Par {{ feature.author.username }}"). Gérez le cas où <code>author</code> est <code>None</code> (demandes créées avant l'ajout de cette relation).</li>
+<li>Recréez la base de données et testez.</li>
+</ol>
+<hr />
+<h2 id="exercice-6-permissions-proteger-les-modifications">Exercice 6 : Permissions (Protéger les Modifications)</h2>
+<p><strong>Tâche :</strong>
+Un utilisateur ne doit pouvoir modifier ou supprimer que <strong>ses propres</strong> demandes. Les routes edit et delete créées au TP2 sont actuellement accessibles à tous.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li><strong>Protéger les routes</strong> : Ajoutez le décorateur <code>@login_required</code> sur les routes <code>/feature/&lt;id&gt;/edit</code> et <code>/feature/&lt;id&gt;/delete</code>.</li>
+<li><strong>Vérifier l'auteur</strong> : Dans ces routes, après avoir récupéré la demande, vérifiez que <code>feature.author_id == current_user.id</code>. Si ce n'est pas le cas :<ul>
+<li>Affichez un message flash d'erreur (ex: "Vous n'avez pas la permission de modifier cette demande.").</li>
+<li>Redirigez vers la page de détails ou l'accueil.</li>
+</ul>
+</li>
+<li><strong>Templates</strong> : N'affichez les boutons "Modifier" et "Supprimer" que si l'utilisateur connecté est le propriétaire de la demande :</li>
+</ol>
+<pre><code class="language-html">{% if current_user.is_authenticated and current_user.id == feature.author_id %}
+    &lt;a href=&quot;{{ url_for('main.edit_feature', id=feature.id) }}&quot; class=&quot;btn btn-warning&quot;&gt;Modifier&lt;/a&gt;
+    &lt;!-- Bouton supprimer... --&gt;
+{% endif %}
+</code></pre>
+<blockquote>
+<p><strong>Authentification vs Autorisation</strong> : ces deux concepts sont distincts. L'<strong>authentification</strong> vérifie <em>qui</em> est l'utilisateur (<code>Flask-Login</code>, <code>login_user</code>). L'<strong>autorisation</strong> vérifie <em>ce qu'il a le droit de faire</em> (vérification <code>author_id == current_user.id</code>). <code>@login_required</code> gère l'authentification, mais c'est à vous de coder la logique d'autorisation.</p>
+</blockquote>
+        <div class="mt-5 text-center">
+            <a href="index.html" class="btn btn-outline-secondary">Retour au sommaire</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tp1 Initialisation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <style>
+        body {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .container {
+            max-width: 1000px;
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #0d6efd;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        h1 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 1rem;
+        }
+        p, li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        code {
+            background-color: #f1f3f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: #c7254e;
+            font-size: 90%;
+        }
+        pre {
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            background-color: #f8f9fa; /* Match highlight.js github theme if needed, or let hljs handle it */
+        }
+        blockquote {
+            border-left: 5px solid #0d6efd;
+            background-color: #e7f1ff;
+            padding: 1rem 1.5rem;
+            border-radius: 0 5px 5px 0;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="tp-1-initialisation-de-featurehub">TP 1 : Initialisation de FeatureHub</h1>
+<p>Bienvenue dans le développement de <strong>FeatureHub</strong> !
+Dans ce premier TP, vous allez mettre en place le socle technique de l'application. Vous utiliserez le framework <strong>Flask</strong> pour créer un serveur web et le moteur de template <strong>Jinja2</strong> couplé à <strong>Bootstrap</strong> pour l'interface.</p>
+<h2 id="ressources-et-framework-css">Ressources et Framework CSS</h2>
+<h3 id="bootstrap-5">Bootstrap 5</h3>
+<p>Nous utiliserons <strong>Bootstrap</strong>, le framework CSS le plus populaire, pour concevoir une interface moderne et responsive sans écrire de CSS complexe.</p>
+<ul>
+<li><strong>Documentation officielle :</strong> <a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/">Introduction à Bootstrap 5.3</a></li>
+</ul>
+<h3 id="ergonomie-et-accessibilite">Ergonomie et Accessibilité</h3>
+<p>En tant que Business Analysts, vous devez veiller à ce que l'outil soit non seulement fonctionnel, mais aussi <strong>utilisable</strong> et <strong>accessible</strong>, en prenant en compte les principes vus lors du cours théorique.</p>
+<h2 id="objectifs">Objectifs</h2>
+<ol>
+<li>Configurer l'environnement de développement.</li>
+<li>Créer une application Flask "Hello World".</li>
+<li>Mettre en place une structure de templates modulaire et gérer les fichiers statiques.</li>
+<li>Utiliser la dynamique de Jinja2 (<code>url_for</code>, boucles, conditions, includes) pour l'interface.</li>
+<li>Construire une interface responsive avec le système de grille Bootstrap.</li>
+<li>Maîtriser le routage Flask et la navigation multi-pages.</li>
+</ol>
+<hr />
+<h2 id="exercice-1-environnement-et-installation">Exercice 1 : Environnement et Installation</h2>
+<p><strong>Tâche :</strong>
+Préparez votre dossier de travail <code>featureHub_app</code> et installez Flask dans un environnement virtuel.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>Créez un dossier pour votre projet.</li>
+<li>Créez un environnement virtuel Python (<code>venv</code>).</li>
+<li>Activez cet environnement.</li>
+<li>Installez la librairie <code>Flask</code> via pip.</li>
+<li>Générez un fichier <code>requirements.txt</code> pour figer les dépendances.</li>
+</ol>
+<p><strong>Vérification :</strong>
+La commande <code>flask --version</code> doit fonctionner dans votre terminal.</p>
+<hr />
+<h2 id="exercice-2-le-serveur-minimal">Exercice 2 : Le Serveur Minimal</h2>
+<p><strong>Tâche :</strong>
+Créez le point d'entrée de votre application <code>app.py</code>.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>Importez <code>Flask</code>.</li>
+<li>Instanciez l'application Flask.</li>
+<li>Définissez une route racine <code>/</code> qui retourne une simple chaîne de caractères (ex: "Bienvenue sur FeatureHub").</li>
+<li>Faites en sorte que l'application se lance en mode debug si le script est exécuté directement.</li>
+</ol>
+<p><strong>Vérification :</strong>
+En lançant <code>python app.py</code>, l'URL <code>http://127.0.0.1:5000/</code> doit afficher votre message.</p>
+<hr />
+<h2 id="exercice-3-templating-avec-jinja2-et-bootstrap">Exercice 3 : Templating avec Jinja2 et Bootstrap</h2>
+<p><strong>Tâche :</strong>
+Au lieu de renvoyer du texte brut, renvoyez une vraie page HTML stylisée.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>Créez l'arborescence nécessaire pour les templates Flask (dossier <code>templates</code>).</li>
+<li><strong>Layout de base (<code>base.html</code>)</strong> : Créez un fichier squelette contenant :<ul>
+<li>La structure HTML5 standard.</li>
+<li>Le lien CDN vers <strong>Bootstrap 5</strong> (CSS et JS).</li>
+<li>Une barre de navigation (Navbar) avec le nom de l'application.</li>
+<li>Un bloc de contenu dynamique (<code>{% block content %}</code>) pour les pages filles.</li>
+<li>Un footer affichant l'année courante (bloc <code>{% block footer %}</code>).</li>
+</ul>
+</li>
+<li><strong>Page d'accueil (<code>index.html</code>)</strong> : Créez ce fichier qui :<ul>
+<li>Hérite de <code>base.html</code>.</li>
+<li>Remplit le bloc contenu avec un titre et un message de bienvenue.</li>
+</ul>
+</li>
+<li><strong>Route Flask</strong> : Modifiez votre fonction python <code>index()</code> pour qu'elle utilise <code>render_template</code> afin d'afficher <code>index.html</code>.</li>
+</ol>
+<hr />
+<h2 id="exercice-4-fichiers-statiques-et-personnalisation">Exercice 4 : Fichiers Statiques et Personnalisation</h2>
+<p><strong>Tâche :</strong>
+Ajoutez du CSS personnalisé sans dépendre uniquement du CDN Bootstrap.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>Créez un dossier <code>static</code> à la racine, puis un sous-dossier <code>css</code>.</li>
+<li>Créez un fichier <code>style.css</code> dedans (ex: ajoutez une règle pour changer la couleur de fond de la page).</li>
+<li>Dans <code>base.html</code>, liez ce fichier en utilisant la fonction Flask <code>url_for('static', filename='css/style.css')</code>.</li>
+</ol>
+<hr />
+<h2 id="exercice-5-injection-de-donnees-et-logique-jinja2">Exercice 5 : Injection de Données et Logique Jinja2</h2>
+<p><strong>Tâche :</strong>
+Simulez des données dans votre code Python et affichez-les dynamiquement dans le template avec une logique conditionnelle riche.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>Dans <code>app.py</code> (avant la route), déclarez une liste de dictionnaires nommée <code>features</code>.<ul>
+<li>Chaque dictionnaire doit représenter une demande avec les champs : <code>id</code>, <code>title</code>, <code>description</code>, <code>status</code>, <code>nature</code>, <code>priority</code>.</li>
+<li>Pour les statuts, utilisez les valeurs : "En attente", "Validé", "Rejeté".</li>
+<li>Pour les natures : "Bug", "Feature", "Amélioration".</li>
+<li>Pour les priorités : "Haute", "Moyenne", "Basse".</li>
+<li>Créez au moins <strong>4 fausses demandes</strong> couvrant différentes combinaisons de statuts, natures et priorités (dont au moins une avec une description vide).</li>
+</ul>
+</li>
+<li>Passez cette liste en argument à votre template via la fonction <code>render_template</code>.</li>
+<li>Dans <code>index.html</code>, utilisez une boucle Jinja <code>{% for ... %}</code> pour générer une <strong>Carte Bootstrap</strong> (<code>card</code>) pour chaque élément de la liste. Utilisez le système de grille Bootstrap (<code>row</code> et <code>col-md-4</code>) pour disposer les cartes en colonnes responsives.</li>
+<li><strong>Conditions Jinja</strong> : Dans chaque carte, appliquez un style dynamique :<ul>
+<li><strong>Badge de priorité</strong> : <code>bg-danger</code> si "Haute", <code>bg-warning text-dark</code> si "Moyenne", <code>bg-secondary</code> si "Basse".</li>
+<li><strong>Badge de statut</strong> : <code>bg-info</code> si "En attente", <code>bg-success</code> si "Validé", <code>bg-danger</code> si "Rejeté".</li>
+<li><strong>Description</strong> : Si la description est vide, affichez le texte <em>"Pas de description fournie."</em> en italique.</li>
+</ul>
+</li>
+<li><strong>Statistiques</strong> : Au-dessus de la grille de cartes, ajoutez une section résumé affichant :<ul>
+<li>Le nombre total de demandes.</li>
+<li>Le nombre de demandes avec le statut "En attente".</li>
+</ul>
+</li>
+</ol>
+<p><em>Astuce : côté Python, calculez ces valeurs et passez-les au template, ou utilisez le filtre Jinja <code>|length</code> directement dans le template.</em></p>
+<p><strong>Résultat attendu :</strong>
+La page d'accueil affiche un résumé chiffré puis une grille de cartes avec des badges colorés dynamiquement.</p>
+<hr />
+<h2 id="exercice-6-template-partials-reutilisabilite">Exercice 6 : Template Partials (Réutilisabilité)</h2>
+<p><strong>Tâche :</strong>
+Factorisez votre code de template en extrayant la carte dans un fichier réutilisable.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li>Créez un fichier <code>templates/_card.html</code> contenant le HTML d'une seule carte Bootstrap (celui que vous avez écrit dans la boucle <code>{% for %}</code> de l'exercice précédent).</li>
+<li>Dans <code>index.html</code>, remplacez le contenu de la boucle par un appel <code>{% include '_card.html' %}</code>. La variable de boucle sera automatiquement accessible dans le fichier inclus.</li>
+<li>Vérifiez que le rendu est identique à avant.</li>
+</ol>
+<blockquote>
+<p><strong>Pourquoi ?</strong> Le fichier <code>_card.html</code> pourra être réutilisé dans d'autres pages (page de recherche, page utilisateur...) sans dupliquer le code HTML. C'est un principe fondamental du templating : <strong>DRY</strong> (<em>Don't Repeat Yourself</em>).</p>
+</blockquote>
+<hr />
+<h2 id="exercice-7-navigation-multi-pages">Exercice 7 : Navigation Multi-Pages</h2>
+<p><strong>Tâche :</strong>
+Enrichissez l'application avec une deuxième page et une navigation dynamique.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li><strong>Page "À propos"</strong> : Créez une route <code>/about</code> dans <code>app.py</code> et un template <code>about.html</code> qui hérite de <code>base.html</code>. Cette page doit décrire brièvement le projet FeatureHub (mission, contexte, technologies utilisées).</li>
+<li><strong>Navbar dynamique</strong> : Dans <code>base.html</code>, ajoutez les liens vers l'accueil et la page "À propos" en utilisant <code>url_for()</code>.</li>
+<li><strong>Lien actif conditionnel</strong> : Faites en sorte que le lien de la page courante soit visuellement mis en avant (classe Bootstrap <code>active</code>).</li>
+</ol>
+<p><em>Astuce : vous pouvez passer une variable <code>active_page</code> depuis chaque route et utiliser une condition Jinja dans la Navbar :</em></p>
+<pre><code class="language-html">&lt;a class=&quot;nav-link {% if active_page == 'index' %}active{% endif %}&quot;
+   href=&quot;{{ url_for('index') }}&quot;&gt;Accueil&lt;/a&gt;
+</code></pre>
+<hr />
+<h2 id="exercice-8-detail-dune-feature-et-gestion-derreurs">Exercice 8 : Détail d'une Feature et Gestion d'Erreurs</h2>
+<p><strong>Tâche :</strong>
+Créez une page dédiée à l'affichage d'une demande spécifique et gérez le cas où la demande n'existe pas.</p>
+<p><strong>Instructions :</strong></p>
+<ol>
+<li><strong>Route dynamique</strong> : Créez une route <code>/feature/&lt;int:feature_id&gt;</code> dans <code>app.py</code>.</li>
+<li>Dans la fonction associée, recherchez la feature correspondante dans votre liste Python.</li>
+</ol>
+<p><em>Astuce : vous pouvez utiliser la fonction <code>next()</code> avec une expression génératrice :</em></p>
+<pre><code class="language-python">feature = next((f for f in features if f['id'] == feature_id), None)
+</code></pre>
+<ol start="3">
+<li><strong>Si la feature existe</strong> : Passez-la à un template <code>view_feature.html</code> qui affiche tous ses champs (titre, description, statut, nature, priorité) dans une mise en page soignée.</li>
+<li><strong>Si la feature n'existe pas</strong> : Utilisez <code>abort(404)</code> (importé depuis <code>flask</code>) pour déclencher une erreur 404.</li>
+<li><strong>Page d'erreur personnalisée</strong> : Créez un gestionnaire d'erreur Flask pour le code 404.</li>
+</ol>
+<p><em>Exemple :</em></p>
+<pre><code class="language-python">@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+</code></pre>
+<p>Le template <code>404.html</code> doit hériter de <code>base.html</code> et afficher un message d'erreur convivial avec un lien pour retourner à l'accueil.</p>
+<ol start="6">
+<li><strong>Lien depuis les cartes</strong> : Dans <code>index.html</code> (ou <code>_card.html</code>), ajoutez un bouton "Détails" sur chaque carte qui pointe vers cette nouvelle route.</li>
+</ol>
+        <div class="mt-5 text-center">
+            <a href="index.html" class="btn btn-outline-secondary">Retour au sommaire</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
