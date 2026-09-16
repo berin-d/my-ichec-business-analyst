@@ -1,0 +1,217 @@
+{
+  "main": {
+    "id": "e24b2621d357dc5d",
+    "type": "split",
+    "children": [
+      {
+        "id": "9354fb5152546630",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c6b6ea98981fa4f2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "MATH/3 - Statistiques/1 -Stat/Théories.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Théories"
+            }
+          },
+          {
+            "id": "43c6a91f22ca3687",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "MATH/3 - Statistiques/Exercices/Drawing exercices.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing exercices"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "60e8f79c7e1cd033",
+    "type": "split",
+    "children": [
+      {
+        "id": "5ad24ef3e9d8bbb5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "567e7956e771bc19",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorateur de fichiers"
+            }
+          },
+          {
+            "id": "d203eafc0f1ea4cd",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Rechercher"
+            }
+          },
+          {
+            "id": "5b5a36b569a9dc27",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Signets"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "82147e3d7fa99159",
+    "type": "split",
+    "children": [
+      {
+        "id": "b48039531b889569",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f098fd804d2ad5e3",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "MATH/3 - Statistiques/Proba/Slides_01_StatDescr_26-27.pdf",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Rétroliens"
+            }
+          },
+          {
+            "id": "a1ccfd61fef89e40",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "MATH/3 - Statistiques/Proba/Slides_01_StatDescr_26-27.pdf",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Liens sortants"
+            }
+          },
+          {
+            "id": "f274e8f3a59bdd71",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Mots-clés"
+            }
+          },
+          {
+            "id": "54df999195a01b7b",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Toutes les propriétés"
+            }
+          },
+          {
+            "id": "5b0998bddda0ff44",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "MATH/3 - Statistiques/Proba/Slides_01_StatDescr_26-27.pdf",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Plan"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Ouvrir le sélecteur rapide": false,
+      "graph:Ouvrir la vue graphique": false,
+      "canvas:Créer une nouvelle toile": false,
+      "daily-notes:Ouvrir la note quotidienne": false,
+      "templates:Insérer le modèle": false,
+      "command-palette:Ouvrir la palette de commandes": false,
+      "bases:Créer une nouvelle base": false,
+      "obsidian-excalidraw-plugin:New drawing": false
+    }
+  },
+  "active": "43c6a91f22ca3687",
+  "lastOpenFiles": [
+    "Pasted Image 20260916074622_334.png",
+    "MATH/3 - Statistiques/1 -Stat/Théories.md",
+    "MATH/3 - Statistiques/Exercices/Drawing exercices.md",
+    "MATH/3 - Statistiques/Exercices",
+    "MATH/3 - Statistiques/2 -Proba/Slides_01_StatDescr_26-27.pdf",
+    "MATH/3 - Statistiques/2 -Proba",
+    "MATH/3 - Statistiques/1 -Stat",
+    "MATH/3 - Statistiques/1 -Stat/Slides_02_Proba_26-27.pdf",
+    "MATH/3 - Statistiques/Exercices/Exercices_et_Solutions.pdf"
+  ]
+}
