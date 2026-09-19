@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzeria</title>
+</head>
+
+<body>
+    <form method="POST" action="{{ url_for('commander_pizza') }}">
+        <div>
+            <label for="petite">Taille de la pizza : </label>
+            <input id="petite" type="radio" name="taille" value="petite" required />
+            <label for="moyenne">Petite</label>
+            <input id="moyenne" type="radio" name="taille" value="moyenne" required />
+            <label for="grande">Moyenne</label>
+            <input id="grande" type="radio" name="taille" value="grande" required />
+            <label for="taille">Grande</label>
+        </div>
+
+        <div>
+            <input type="checkbox" id="fromage" value="fromage" name="ingredients" />
+            <label for="fromage">Fromage</label>
+
+            <input type="checkbox" id="champignons" value="champignons" name="ingredients" />
+            <label for="champignons">Champignons</label>
+
+            <input type="checkbox" id="olives" value="olives" name="ingredients" />
+            <label for="olives">Olives</label>
+
+        </div>
+
+        <button type="submit">Commander</button>
+
+    </form>
+
+    <div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+</body>
+
+</html>

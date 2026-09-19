@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu du plus ou moins</title>
+</head>
+
+<body>
+    <form method="POST" action="{{ url_for('find_number') }}">
+        <label for="guess_number">Proposez un nombre entre 1 et 100 :</label>
+        <input type="number" id="guess_number" name="guess_number" min="1" max="100" required>
+        <button type="submit">Valider</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+        <p><a href="{{ url_for('finder') }}">Nouvelle partie</a></p>
+</body>
+
+</html>
