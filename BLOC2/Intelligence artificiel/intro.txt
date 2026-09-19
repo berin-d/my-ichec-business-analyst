@@ -1,0 +1,12 @@
+Pour pouvoir pleinement suivre le cours dès  le départ vous devez installer deux logiciels libres gratuits et disponibles pour tous les systèmes (Windows, Mac, Linux) :
+
+R project :
+Un lien de téléchargement : https://pbil.univ-lyon1.fr/CRAN/
+Et d’autres en cas de problèmes : https://cran.r-project.org/mirrors.html
+RStudio :
+Le lien de téléchargement : https://rstudio.com/products/rstudio/download/#download
+En cas de soucis :
+https://rstudio.com/products/rstudio/download/
+https://rstudio.com/products/rstudio/
+Pour plus de facilité je vous conseille de les installer dans cet ordre.
+Merci aussi de consulter les annonces après votre inscription à ce cours.
