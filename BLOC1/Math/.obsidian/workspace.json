@@ -64,9 +64,7 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false,
-                "showSearch": false,
-                "searchQuery": ""
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Explorateur de fichiers"
@@ -214,9 +212,9 @@
   },
   "active": "6f4ac5a0d5c1b269",
   "lastOpenFiles": [
-    "Séances/Séance 1.md",
-    "Notes/3 - Statistiques/Exercices/Drawing exercices.md",
     "Notes/3 - Statistiques/Exercices/Exercices_et_Solutions.pdf",
+    "Notes/3 - Statistiques/Exercices/Drawing exercices.md",
+    "Séances/Séance 1.md",
     "Pasted Image 20260916143257_226.png",
     "Notes/3 - Statistiques/1 -Stat/Slides_01_StatDescr_26-27.pdf",
     "Notes/3 - Statistiques/2 -Proba/Slides_02_Proba_26-27.pdf",
