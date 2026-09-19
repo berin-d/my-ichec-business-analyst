@@ -1,4 +1,4 @@
-
+<span style="background-color: green; width:500px">Test</span>
 ## 1. Définition, Alignement et Rôle du Business Analyst
 
 - **Définition (BABOK/IIBA)** : Pratique d'activation du changement organisationnel pour répondre à des besoins et recommander des solutions génératrices de valeur.
