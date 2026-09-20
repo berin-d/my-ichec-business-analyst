@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Introduction/3 - L'environnement/Organisation.md",
+                "file": "Introduction/1 - Notions générales/1 - Notions générales.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Organisation"
+              "title": "1 - Notions générales"
             }
           }
         ],
@@ -56,7 +56,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Explorateur de fichiers"
@@ -189,25 +191,29 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "callout-manager:Insert Callout": false,
       "switcher:Ouvrir le sélecteur rapide": false,
       "graph:Ouvrir la vue graphique": false,
       "canvas:Créer une nouvelle toile": false,
       "daily-notes:Ouvrir la note quotidienne": false,
       "templates:Insérer le modèle": false,
       "command-palette:Ouvrir la palette de commandes": false,
-      "bases:Créer une nouvelle base": false,
-      "obsidian-excalidraw-plugin:New drawing": false
+      "bases:Créer une nouvelle base": false
     }
   },
   "active": "6e6611229093264a",
   "lastOpenFiles": [
-    "Introduction/0 - Introduction.md",
+    "Introduction/1 - Notions générales/3 - Domaine de performance.md",
+    "Introduction/1 - Notions générales/2 - Principes.md",
+    "Introduction/1 - Notions générales/1 - Notions générales.md",
     "Introduction/3 - L'environnement/Organisation.md",
     "Introduction/2 - Produit & Programmes/Notions.md",
+    "Introduction/0 - Introduction.md",
+    "Pasted image 20260920130101.png",
+    "Introduction/1 - Notions générales/Domaines d'expertise",
     "Introduction/3 - L'environnement",
-    "Introduction/1 - Notions générales/Principes.md",
     "Introduction/2 - Produit & Programmes",
-    "Introduction/1 - Notions générales/Notions générales.md",
     "Introduction/1 - Notions générales",
     "Introduction"
   ]

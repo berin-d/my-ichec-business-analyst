@@ -6,7 +6,7 @@ C'est une forme de toile d'araignée et non d'une ile.
 - Le projet va toujours au délà du projet.
 
 # Facteur internes
-
+---
 Examen : Une série de facteur, l'un deux n'est pas un facteur interne.
 
 - 'lessons learned' : dois êtres mise en place et donner accès aux employés.
@@ -18,7 +18,13 @@ Examen : Une série de facteur, l'un deux n'est pas un facteur interne.
 
 ## Structure organisationnelles
 
-Examen : Cette section n'est pas à l'examen !
+
+> [!INFO] Examen
+> **Cette section n'est pas à l'examen !**
+
+
+
+
 
 # Le PMO
 

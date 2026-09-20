@@ -13,6 +13,7 @@
         
     - **Après** : Tests d'acceptation et gestion de la conduite du changement.
 
+----
 # 2. Le Modèle des 6 Concepts Clés (BACCM - BABOK)
 
 | **Concept**                            | **Définition**                                        | **Exemple du cours**                                           |
@@ -24,6 +25,7 @@
 | **Valeur (_Value_)**                   | Utilité (tangible/intangible) apportée.               | Gain de temps (patient), maîtrise du planning (médecin).       |
 | **Contexte**                           | Environnement interne/externe influençant le choix.   | Milieu rural (option téléphone) vs urbain (option app mobile). |
 
+----
 # 3. Matrice des Profils & Niveaux de Maturité en BA
 
 ### Gradation des Niveaux de Responsabilité
@@ -33,8 +35,8 @@
 2. **Niveau 2 - Analyste Processus / Projets** : Cadrage des projets, _Gap Analysis_ (As-Is vs To-Be), optimisation des processus d'affaires.
     
 3. **Niveau 3 - Analyste Senior / Entreprise** : Analyse stratégique, gouvernance, arbitrage du portefeuille de projets et modèles d'affaires.
-    
 
+----
 ### Titres Courants sur le Marché
 
 - **Enterprise BA** : Orientation globale et gouvernance stratégique.

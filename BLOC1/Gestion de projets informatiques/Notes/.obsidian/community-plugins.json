@@ -1,4 +1,8 @@
 [
   "better-export-pdf",
-  "obsidian-excalidraw-plugin"
+  "obsidian-excalidraw-plugin",
+  "obsidian-emoji-toolbar",
+  "callout-manager",
+  "callout-menu",
+  "obsidian-list-callouts"
 ]

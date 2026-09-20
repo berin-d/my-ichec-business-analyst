@@ -1,17 +1,23 @@
-> états d'esprit.
 
-Examen : Donne 4 principes et répère l'intrus.
-Examen : Donne 4 définition d'un principe, une est fausse.
+> [!Example] Principe
+>  états d'esprit.
+
+> [!Warning] Examen
+> • On te donne 4 principes : Répère l'intrus.
+   • On te donne 4 définition d'un principe : Une est fausse.
+
+---
 
 ### Adopt a Holistic View
 
-Des fois ce qu'on vois étant un problème ne l'est pas.
-Prenez du recul, une vue plus large.
+- Des fois ce qu'on vois étant un problème ne l'est pas.
+- Prenez du recul, une vue plus large.
 
 ### Focus on Value
 
 - Création de valeur, on fait un projet pour apportez la valeur à l'organisation.
-Business Case : justifie le projet. -> on débloque 1 millions d'euros POUR une meilleur comptabilité
+
+- Business Case : justifie le projet. -> on débloque 1 millions d'euros POUR une meilleur comptabilité
 
 ### Quality into Processes
 
@@ -20,8 +26,6 @@ Pas la qualité en elle même mais le respect des exigences.
 - Intégration de la qualité.
 - DoD : Definition of Done.
 - Assurer que les exigences soit satisfaites.
-
-
 
 ### Be an Accountable Leader
 
