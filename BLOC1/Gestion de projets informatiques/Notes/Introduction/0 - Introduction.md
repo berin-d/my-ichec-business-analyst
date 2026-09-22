@@ -8,6 +8,7 @@
 
 ###  Cours non donné cette année
 
+
 - MS Project
 
 ### à étudier absoluement pour l'examen
@@ -16,7 +17,6 @@
 
 
 ----
-
 ## Principaux supports de cours
 
 - **Les slides** : Généralement pour le prof. Mais pas un bon résumer.

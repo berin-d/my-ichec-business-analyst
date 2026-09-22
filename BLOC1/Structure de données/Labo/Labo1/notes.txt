@@ -1,0 +1,26 @@
+# C = Comprendre les données.
+
+- Avant de plonger dans le nettoyage, je me demande quelle sorte de données je regarde
+
+-> Des données sur des commandes de produit numérique.
+
+- A quelles questions business et data je peux répondre grâce à ces données ? 
+
+-> quels sont les produits qui génèrent le plus de chiffre d'affaire ?
+-> quel est la région où il y à le plus de commande ?
+
+- Quelle histoire ces données peuvent m’aider à raconter ? 
+
+-> 
+
+- Que représente chaque ligne ? (granularité dés données) 
+
+-> Une commande faite par un client
+
+- Quelles sont les métriques ? (ce que les données mesurent → quantifiable)
+
+-> Le prix, le temps
+
+- Quelles sont les dimensions ? (ce que les données décrivent → aspect qualitatif)
+
+-> sur le site web ? en direct ou affilier ? un compte ou non, une région, le nom du produit, les différents id
