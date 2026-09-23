@@ -1,6 +1,4 @@
 
-
-
 C'est une forme de toile d'araignée et non d'une ile.
 
 # 1. Environnement
