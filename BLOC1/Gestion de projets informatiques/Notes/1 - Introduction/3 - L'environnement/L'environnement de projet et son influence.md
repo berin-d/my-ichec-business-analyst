@@ -6,7 +6,9 @@ C'est une forme de toile d'araignée et non d'une ile.
 > [!NOTE] L'environnement du projet (Interne et Externe) 
 > Un projet ne s'exécute pas de manière> isolée ; il est façonné par son contexte.
 
+
 ----
+
 # 2. L’environnement interne
 
 ## Les facteurs internes
@@ -20,7 +22,6 @@ C'est une forme de toile d'araignée et non d'une ile.
 > [!Warning] Examen
 > • Une série de facteur, l'un deux n'est pas un facteur interne.
 
-----
 ## Les facteurs externes
 
 > [!Example] L'environnement externe
@@ -29,7 +30,9 @@ C'est une forme de toile d'araignée et non d'une ile.
 > [!Summary ] _Exemple :_ Contrainte légales
 > Par exemple un changement de législation soudain.
 
+
 ---
+
 # 3. Structure organisationnelles
 
 > [!Warning] Examen

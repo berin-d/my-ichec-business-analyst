@@ -6,6 +6,7 @@
 > • On te donne 4 principes : Répère l'intrus.
    • On te donne 4 définition d'un principe : Une est fausse.
 
+
 ---
 
 ### 1. Adopt a Holistic View
@@ -27,14 +28,12 @@
 
 ### 3. Quality into Processes
 
-
 > [!NOTE]
 > Les processus et les livrables doivent être conçus pour répondre aux exigences et aux critères de réception fixés par les parties prenantes. Cela passe par une recherche d'amélioration continue, indépendamment de la méthode de gestion choisie (prédictive ou agile).
 > 
 > • Exemple : *DoD* (Definition of Done)
 
 ### 4. Be an Accountable Leader
-
 
 > [!NOTE] 
 > Le leadership ne repose pas sur l'autorité hiérarchique, mais sur la capacité à inspirer, soutenir et fédérer. 
@@ -43,7 +42,6 @@
 
 ### 5. Integrate Sunstaibility within all project Area
 
-
 > [!NOTE] 
 > 
 > Le projet doit répondre aux besoins présents sans compromettre ceux des générations futures. Cela implique d'anticiper et de gérer activement les externalités (impacts environnementaux, sociaux) et de faire des choix responsables et éthiques (par exemple, dans le choix des matériaux).
@@ -51,7 +49,6 @@
 > • Faire face à tout externalité
 
 ### 6. Build and empowered Culture
-
 
 > [!NOTE]
 > La réussite repose sur le travail collaboratif et la confiance mutuelle. Clarifier les rôles et responsabilités de chacun tout en offrant de l'autonomie à l'équipe permet de créer une synergie positive et d'accroître l'efficacité globale.

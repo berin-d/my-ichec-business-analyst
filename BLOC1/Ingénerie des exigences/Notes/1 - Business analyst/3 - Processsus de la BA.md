@@ -112,8 +112,8 @@ Ce qui motive le changement, c'est la résolution de ce **Problème**.
 ### Analyse to be
 
 > Fixation d'objectifs afin de résoudre le problème identité en amont
-
-- Réduction du temps moyen u traitement à 3 mois
+ 
+- Réduction du temps moyen un traitement à 3 mois
 - Augmentation du niveau de satisfaction à 20%
 
 ---

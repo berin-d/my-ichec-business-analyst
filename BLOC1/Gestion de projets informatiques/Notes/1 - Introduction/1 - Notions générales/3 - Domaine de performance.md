@@ -6,8 +6,10 @@
 > [!EXAMPLE] Définition
 > Les sept domaines de performance définis par le Project Management Institute (PMI) représentent les champs d'application concrets dans lesquels les principes de gestion de projet doivent s'exercer. Ils fonctionnent ensemble comme un système intégré :
 
+
 --- 
-## Les 7 domaines de performance
+
+# Les 7 domaines de performance
 
 > [!NOTE] La gouvernance 
 > Fournit le cadre structuré pour la prise de décision et la supervision. Elle s'assure que le projet reste aligné sur les objectifs stratégiques de l'organisation pour maximiser la création de valeur.

@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1 - Business analyst/1 - Définitions de la BA.md",
+                "file": "1 - Business analyst/3 - Processsus de la BA.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "1 - Définitions de la BA"
+              "title": "3 - Processsus de la BA"
             }
           }
         ],
@@ -219,11 +219,11 @@
   },
   "active": "f4312e5da927e439",
   "lastOpenFiles": [
-    "1 - Business analyst/3 - Processsus de la BA.md",
     "1 - Business analyst/4 - Ingénerie logicielle.md",
-    "1 - Business analyst/1 - Définitions de la BA.md",
-    "1 - Business analyst/2 - Role du business analyst.md",
     "1 - Business analyst/5 - Définition IE et taxonomie.md",
+    "1 - Business analyst/3 - Processsus de la BA.md",
+    "1 - Business analyst/2 - Role du business analyst.md",
+    "1 - Business analyst/1 - Définitions de la BA.md",
     "Pasted image 20260919120629.png",
     "1 - Business analyst/Synthèse.md",
     "1 - Business analyst"
