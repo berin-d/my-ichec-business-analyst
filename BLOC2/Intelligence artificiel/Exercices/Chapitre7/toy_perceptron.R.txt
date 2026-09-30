@@ -1,0 +1,22 @@
+library(neuralnet)
+normalize <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x)))
+}
+weight<-c(133,160,152,120)
+height<-c(65,72,70,60)
+gender<-c(1,0,0,1)
+
+sw<-scale(weight)
+sh<-scale(height)
+nw<-normalize(sw)
+nh<-normalize(sh)
+
+toydata<-data.frame(nw,nh,gender)
+
+set.seed(123)
+nn <- neuralnet(gender ~ nw+nh, 
+                data=toydata, hidden=c(2),
+                linear.output=FALSE, 
+                threshold=0.01,
+                stepmax = 100000)
+plot(nn)

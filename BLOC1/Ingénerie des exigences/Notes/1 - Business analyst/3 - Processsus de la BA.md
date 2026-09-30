@@ -1,41 +1,22 @@
-Voici une synthèse complète et structurée du cours sur le **Processus de la Business Analysis (BA)** basée sur le document fourni.
-
-# Synthèse : Le Processus de la Business Analysis
 
 ## 1. Introduction & Principes généraux
 
-- **Pas de processus universel :** Il n'existe pas de processus unique et systématique. Le choix du processus dépend des circonstances, du problème, des parties prenantes et des technologies.
-    
-- **Dynamique réelle :** En pratique, les phases se superposent et comportent du parallélisme, des itérations et des allers-retours. Pour des raisons pédagogiques, le cours présente un **processus type linéaire et itératif par raffinements successifs**.
-    
-- **Structure globale (basée sur le BABOK) :**
-    
-    1. **Analyse du contexte (Business Context) :** Activité transversale haute.
-        
-    2. **Planification des activités de BA :** Tâche de fond assimilable à de la gestion de projet.
-        
-    3. **Les 4 grandes phases du processus :**
-        
-        - **Strategy Analysis** (Analyse stratégique)
-            
-        - **Requirements Analysis** (Analyse des exigences)
-            
-        - **Solution Design** (Conception de la solution)
-            
-        - **Solution Evaluation** (Évaluation de la solution)
+> [!NOTE] Pas de processus universel
+> Il n'existe pas de processus unique et systématique. Le choix du processus dépend des circonstances, du problème, des parties prenantes et des technologies.
+>
+
+![[Pasted image 20260928135327.jpg]]
 
 ----
 ## 2. Activités transversales et cadres
 
 ### A. Analyse du contexte (Business Context)
 
-- Le contexte rassemble les circonstances qui influencent ou expliquent le changement (valeurs de l'entreprise, structure, ressources, etc.).
-    
-- **Exemple illustratif (Secteur bancaire) :**
-    
-    - _Private Banking :_ Relation client privilégiée, peu de clients à haut revenu $\rightarrow$ Le coût du SI n'est pas déterminant, la qualité, la personnalisation et la flexibilité priment.
-        
-    - _Retail Banking :_ Banque grand public, grands volumes, transactions multiples $\rightarrow$ Le facteur coût est prédominant, le SI s'appuie sur des processus standards.
+> [!example] Définition
+> Le contexte rassemble les circonstances qui influencent ou expliquent le changement (valeurs de l'entreprise, structure, ressources, etc.).
+
+> [!Summary]  Exemple : Private Banking
+> Relation client privilégiée, peu de clients à haut revenu $\rightarrow$ Le coût du SI n'est pas déterminant, la qualité, la personnalisation et la flexibilité priment.
 
 ### B. Planification des activités de Business Analysis
 
@@ -58,79 +39,11 @@ Voici une synthèse complète et structurée du cours sur le **Processus de la B
 ----
 ## 3. Phase 1 : Strategy Analysis (Analyse Stratégique)
 
+![[Pasted image 20260928135836.png]]
+
 L'analyse stratégique s'effectue en amont des détails et est généralement menée par un **Business Analyst Senior**. Elle comprend **4 étapes clés** :
 
-1. **Analyze Current State (Situation _As-Is_) :**
-    
-    - Description de l'état actuel de l'entreprise (structure, culture, processus actuels via BPMN, indicateurs KPI actuels).
-        
-    - Description des besoins/problèmes à un niveau macroscopique.
-        
-    - _Livrables clés :_ `Current State Description`, `Business Requirement`.
-        
-    - _Techniques :_ Business Model Canvas, PEST, etc.
-        
-2. **Define Future State (Situation _To-Be_) :**
-    
-    - Définition des buts, des objectifs à atteindre (ex: cibles KPI) et des valeurs attendues (_Potential Value_).
-        
-    - Identification des capacités, infrastructures et ressources requises.
-        
-3. **Risk Analysis (Analyse des risques) :**
-    
-    - Évaluation des risques liés au changement.
-        
-    - Définition des stratégies et contre-mesures pour réduire la probabilité de survenance et l'impact des risques.
-        
-4. **Define Change Strategy (Stratégie de changement / _Gap Analysis_) :**
-    
-    - Analyse de l'écart (_Gap Analysis_) entre l'état actuel (_As-Is_) et l'état futur (_To-Be_).
-	    
-        
-    - Évaluation des solutions selon des critères (coût, délai, impact, niveau de risque, faisabilité) via une grille ou matrice d'évaluation pour sélectionner la meilleure option.
-        
-    - _Livrables clés :_ 
-	    - `Solution Scope`
-	    - `Change Strategy Document -> Approche pour piloter le changement`.
-
----
-### Analyse as is
-
-> Exemple : Une administration régionale gère des dossier de demandes de primes à la rénovation durable d'un bâtiment.
-
-#### Contexte
-- Description des processus en place : BPMN
-- Mesurer la performance : indicateur de performance comme KPI, délai moyen du traitement
-
-#### Problème
-- Délai trop long dans la prise de décision du montant pour l'octroi d'une prime.
-- Mécontentement des différentes partie prenante.
-
-Ce qui motive le changement, c'est la résolution de ce **Problème**.
-
----
-### Analyse to be
-
-> Fixation d'objectifs afin de résoudre le problème identité en amont
- 
-- Réduction du temps moyen un traitement à 3 mois
-- Augmentation du niveau de satisfaction à 20%
-
----
-### Gap analysis
-
-> Comment migrer d'une situation "as is" vers "to be". Avec l'identification des facteurs limitants
-
-- Manque d'automatisation des processus
-- Nombre d'intervenant trop nombreux
-- Motivation et formation du personnel irrégulières
-
-> Identification des solutions possibles (bridging the gap)
-
-- Automatisation de aches encore manuelles
-- Optimisation via la réduction du nombre d'intervenants
-- Plan de formation et de motivation du personnel
-
+![[Pasted image 20260928140031.png]]
 
 ![[Pasted image 20260919120629.png]]
 

@@ -1,0 +1,41 @@
+#########################################################################################
+# TP Exercice 2 : les villes de France
+#########################################################################################
+#########################################################################################
+
+# (a) Allez chercher le fichier "villes\_france.csv" sur Moodle et enregistrez-le dans 
+# une variable "villes" (attention, la première ligne correspond au noms des variables). 
+
+setwd("C:/Users/ceng/Dropbox/Ichec/AD/TP")
+villes <- read.csv("villes_france.csv", header = TRUE)
+
+
+
+#################################################################################################################
+#(b) On fait l'ACP avec le package FactoMineR en deux dimensions avec les 9 variables quantitatives.
+##################################################################################################################
+
+library(FactoMineR)#pour analyser
+library(factoextra)#pour visualiser
+
+resultats <- PCA(villes[,2:10], scale.unit = TRUE, ncp = 2)
+
+#on rajoute les coordonnées deux premières composantes dans le fichier villes
+
+villes <- cbind(villes, resultats$ind$coord[,1:2])
+
+##############################################################################################################
+# Kmeans avec 2 parties
+#############################################################################################################"
+
+##################################################################################################################
+library(amap)
+# KMeans with k=2, 10 iterations for each kmeans, 10 kmeans tried..
+km1 <- Kmeans(villes[,2:10], centers = 2, iter.max = 10, nstart = 100, method = "euclidean")#defaut distance euclidienne
+# Size of the clusters
+table(km1$cluster)
+
+#on fait le plot
+plot(villes[,"Dim.1"], villes[,"Dim.2"], xlab = "DIM 1 de l'ACP", ylab = "DIM 2 de l'ACP", col = km1$cluster)
+legend("bottomright",legend=1:2,fill=1:2, title="Clusters")
+

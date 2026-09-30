@@ -1,0 +1,249 @@
+#|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+# Classifications
+#|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+# Introduction -----------------------------------------------------------------
+
+## Data preparation ============================================================
+
+#Interactive reading of the external file for mydata data
+mydata <- read.table(file.choose(), header=TRUE, sep=",", na.strings="NA", dec=".", strip.white=TRUE)
+# Or internal data set
+data("iris")
+mydata<-iris
+#If necessary, the follwong step suppress all rows with missing dat (NA)
+mydata<-na.omit(mydata)
+# Number of lines
+N<- dim(mydata)[1]
+# Number of columns
+nCol<- dim(mydata)[2]
+# Column number for the class
+colClass<-5
+# Rename the colClass column "Class" for a standart use of formulae
+oldnames<-colnames(mydata)
+# Transform mydata into a dataframe to be able to transform 
+# the "Class" variable into a factor(type needed by 
+# several classification methods)
+mydata<-data.frame(mydata[,-colClass], as.factor(mydata[,colClass]))
+# Now variable Class is the last one, and we give it the 
+# name "Class"
+colnames(mydata)[nCol]<-"Class"
+colClass<-nCol
+#load library for classError
+library(mclust)
+# load class library for knn
+library(class)
+
+## Training set and test set ===================================================
+
+# Building a training set and a test set
+# index is the index of a random sample (1/3 ,2/3) for indexidation set and
+# training set.
+index <- sample(1:N, size = round(N/3), replace = FALSE,prob = rep(1/N, N))
+# Build the two sets using index
+training.set <- mydata[-index,-colClass]
+training.class<- as.factor(mydata[-index,colClass])
+test.set <- mydata[index,-colClass]
+test.class <- as.factor(mydata[index,colClass])
+
+# Build a training set with classes (needed by some functions)
+training.set.class<- data.frame(training.set,training.class)
+colnames(training.set.class)<-colnames(mydata)
+
+
+## k-nearest neighbours ========================================================
+mydata.knn <- knn(training.set, test.set, training.class, k = 6)
+# Print a summary of results
+summary(mydata.knn)
+
+# Compute  and print the confusion matrix
+cm<-table(as.factor(test.class), mydata.knn)
+cm
+(sum(cm) - sum(diag(cm)))/sum(cm)
+# Mehtod classError from packahe Mclust do the same thing
+classError(mydata.knn,as.factor(test.class))$errorRate
+
+# Main clasical algorithms -----------------------------------------------------
+## Logistic Regression =========================================================
+##
+library(nnet)
+# For non-binary classification :
+mydata.logit <- multinom(Class ~  . , data = training.set.class)
+# For binary classification :
+# mydata.logit <- glm(Class ~ . , data = training.set.class, family = 'binomial')
+
+summary(mydata.logit)
+predict(mfit, newdata = test.set, "probs")
+mydata.logit.pred<-predict(mfit, newdata = test.set, "class")
+# Compute  and print the confusion matrix
+cm<-table(test.class, mydata.logit.pred)
+cm
+classError(mydata.logit.pred,test.class)$errorRate
+
+## Bayesian classification =====================================================
+### Naive Bayes ################################################################
+library(e1071)
+#Training  du mod?le
+mydata.naive.model<- naiveBayes(training.set, training.class)
+mydata.naive.pred<-predict(mydata.naive.model,test.set )
+# Print a summary of results
+summary(mydata.naive.pred)
+# Compute  and print the confusion matrix
+cm<-table(test.class, mydata.naive.pred)
+cm
+classError(mydata.naive.pred,test.class)$errorRate
+
+### Gaussian mixtures ##########################################################
+
+#load MCLUST library
+library(mclust)
+mclustModel<-MclustDA(training.set,training.class,modelType = "EDDA")
+mclust.pred<-predict(mclustModel,test.set)
+cm<-table(test.class,mclust.pred$classification)
+classError(mclust.pred$classification,test.class)$errorRate
+
+## SVM =========================================================================
+
+
+# SVM
+#install.packages("e1071")
+library(e1071)
+#Training  du mod?le
+mydata.svm.model<- svm(Class ~ ., data = training.set.class)
+mydata.svm.pred<-predict(mydata.svm.model,test.set )
+cm<-table(test.class, mydata.svm.pred)
+cm
+classError(mydata.svm.pred,test.class)$errorRate
+
+## Decision Trees ==============================================================
+# Using tree package
+library(tree)
+#Tree on all data
+mydata.tree<- tree(Class ~ ., data = mydata)
+mydata.tree
+summary(mydata.tree)
+plot(mydata.tree, main=paste("Decision Tree for mydata Data",sep=""));
+text(mydata.tree, all=T, cex=0.85)
+
+#Using tree for prediction
+mydata.tree<- tree(Class ~ ., data = training.set.class)
+mydata.tree.pred<-predict(mydata.tree, test.set, type="class")
+cm<-table(test.class, mydata.tree.pred)
+cm
+classError(mydata.tree.pred,test.class)$errorRate
+
+## Using party package
+#install.packages("party")
+library(party)
+mydata.ctree<-ctree(Class ~ ., data = mydata,controls = ctree_control(maxdepth = 6))
+plot(mydata.ctree)
+
+# Using rpart package
+library(rpart)
+library(rpart.plot)
+
+mydata.rpart<-rpart(Class ~ . , data = mydata)
+rpart.plot(mydata.rpart)
+
+# The caret package ------------------------------------------------------------
+
+# The caret package (short for Classification And Regression Training)
+# contains functions to streamline the model training process for 
+# complex regression and classification problems.  
+# The package utilizes a number of R packages but tries not to load 
+# them all at package start-up.
+# The package "suggests" field  includes  27  packages.
+# caret loads  packages  as  needed  and  assumes  that  they  are  installed.
+
+install.packages("caret")
+library(caret)
+
+# Building a training set and a test set
+inTrain <- createDataPartition(y = mydata$Class,
+                               ## the outcome data are needed
+                               p = .75,
+                               ## The percentage of data in the
+                               ## training set
+                               list = FALSE)
+
+## The format of the results
+## The output is a set of integers for the rows of data
+## that belong in the training set.
+str(inTrain)
+training <- mydata[ inTrain,]
+testing  <- mydata[-inTrain,]
+nrow(training)
+nrow(testing)
+
+# Using a specific method for a training/test
+# Example SVM
+svmFit <- train(Class ~ .,
+                data = training,
+                method = "svmLinear")
+svmFit
+svmClasses <- predict(svmFit, newdata = testing)
+str(svmClasses)
+confusionMatrix(data = svmClasses, testing$Class)
+
+#Example knn
+knnFit <- train(Class ~ .,
+                data = training,
+                method = "knn")
+knnFit
+knnClasses <- predict(knnFit, newdata = testing)
+confusionMatrix(data = knnClasses, testing$Class)
+
+#A complete list of available models 
+?train_model_list
+
+# Exercise : Find and try C4.5 trees and Naive bayes models
+treeFit <- train(Class ~ .,
+                 data = training,
+                 method = "J48")
+treeFit
+treeClasses <- predict(treeFit, newdata = testing)
+confusionMatrix(data = treeClasses, testing$Class)
+
+naivebayesModel <-train(y=mydata$Class, x=mydata[,-colClass],method = "naive_bayes")#, trControl=ctrl)
+nbFit <- train(Class ~ .,
+               data = training,
+               method = "naive_bayes")
+nbFit
+nbClasses <- predict(nbFit, newdata = testing)
+confusionMatrix(data = nbClasses, testing$Class)
+
+# Comparing models
+# kfold cross-validation with k=10 
+ctrl <- trainControl(method = "cv",
+                     number=10, verboseIter = TRUE)
+
+# train the svm model
+svmModel<-train(y=mydata$Class, x=mydata[,-colClass],method = "svmLinear", trControl=ctrl)
+knnModel<-train(y=mydata$Class, x=mydata[,-colClass],method = "kknn", trControl=ctrl)
+
+# collect resamples
+results <- resamples(list(SVM=svmModel, KNN=knnModel))
+# summarize the distributions
+summary(results)
+# boxplots of results
+bwplot(results)
+# dot plots of results
+dotplot(results)
+
+# Exercises --------------------------------------------------------------------
+
+## Exo 1 =======================================================================
+# Perform knn, logistic regression,  naive bayes, Mclust, SVM and decision tree classification 
+# on "Credit Cards Default" data ( https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients )
+
+## Exo 2 =======================================================================
+# Use classification trees on all the data set Titanic to explain "how 
+# survivors has survived ?"using variables age, sex and pclass
+
+## Exo 3 =======================================================================
+# Using caret package add C4.5 trees and Naive bayes models in evaluation for iris data
+
+## Exo 4 =======================================================================
+# Using caret package find the parameter  for Leave one out cross validation
+# and find the best models between knn, naive bayes, svm and
+# C4.5 trees for the credit defaults dataset.

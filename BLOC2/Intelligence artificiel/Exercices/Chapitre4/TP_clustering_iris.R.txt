@@ -1,0 +1,130 @@
+#########################################################################################
+# TP Exercice 1 : les iris
+#########################################################################################
+#########################################################################################
+# a) Chargez les données sur les iris de Fisher
+data("iris")
+iris
+
+#################################################################################################################
+# b) On fait l'ACP avec le package FactoMineR
+##################################################################################################################
+
+library(FactoMineR)#pour analyser
+library(factoextra)#pour visualiser
+
+resultats <- PCA(iris, scale.unit = TRUE, ncp = 2,quali.sup = 5)
+plot(resultats, habillage = 5)
+#on ajoute les coordonnées :
+
+iris <- cbind(iris, resultats$ind$coord[,1:2])
+
+
+
+#################################################################################################################
+#c) kmeans distance euclidienne
+##################################################################################################################
+library(amap)
+# KMeans with k=3, 10 iterations for each kmeans, 10 kmeans tried..
+km1 <- Kmeans(iris[,1:4], centers = 3, iter.max = 10, nstart = 10, method = "euclidean")#defaut distance euclidienne
+# Size of the clusters
+table(km1$cluster)
+
+#En faisant tourner les commandes ci-dessus on a parfois un message d'erreur qui apparaît car il n'y a pas toujours convergence 
+#en 10 itérations. N'hésitez pas à augmenter le "iter.max" et voir si vous convergez en augmentant celui-ci.
+#################################################################################################################
+#d) représentation du clustering
+##################################################################################################################
+# Plot of the clusters sur les axes principaux de l'ACP
+plot(iris[,"Dim.1"], iris[,"Dim.2"], xlab = "DIM 1 de l'ACP", ylab = "DIM 2 de l'ACP", col = km1$cluster)
+
+#on veut voir les clusters et les espèces afin de voir si les clusters "respectent" les différentes espèces
+plot(iris[,"Dim.1"], iris[,"Dim.2"], xlab = "DIM 1 de l'ACP", ylab = "DIM 2 de l'ACP", col = iris[,5], pch = km1$cluster)
+#on voit que les espèces sont relativement bien reconnues.
+
+#################################################################################################################
+#e) kmeans distance "maximum"
+##################################################################################################################
+
+
+km2 <- Kmeans(iris[,1:4], centers = 3, iter.max = 20, nstart = 10, method = "maximum")#defaut distance euclidienne
+# Size of the clusters
+table(km2$cluster)
+
+
+plot(iris[,"Dim.1"], iris[,"Dim.2"], xlab = "DIM 1 de l'ACP", ylab = "DIM 2 de l'ACP", col = iris[,5], pch = km2$cluster)
+#text(iris[,"Dim.1"], iris[,"Dim.2"], labels = iris[,5])
+
+
+#################################################################################################################
+#f) kmeans distance "manhattan"
+##################################################################################################################
+
+
+km3 <- Kmeans(iris[,1:4], centers = 3, iter.max = 20, nstart = 10, method = "manhattan")#defaut distance euclidienne
+# Size of the clusters
+table(km3$cluster)
+
+plot(iris[,"Dim.1"], iris[,"Dim.2"], xlab = "DIM 1 de l'ACP", ylab = "DIM 2 de l'ACP", col = iris[,5], pch = km3$cluster)
+
+#################################################################################################################
+#g) kmeans distance avec la distance euclidienne et 5 clusters
+##################################################################################################################
+km4 <- Kmeans(iris[,1:4], centers = 5, iter.max = 10, nstart = 100, method = "euclidean")#defaut distance euclidienne
+# Size of the clusters
+table(km4$cluster)
+
+
+plot(iris[,"Dim.1"], iris[,"Dim.2"], xlab = "DIM 1 de l'ACP", ylab = "DIM 2 de l'ACP", col = iris[,5], pch = km4$cluster)
+#on voit que le cluster des "setosa" a été éclaté en trois et que les deux autres clusters sont restés relativement identiques.
+
+#################################################################################################################
+#h) clustering hiérarchique
+##################################################################################################################
+
+library(dendextend)
+#on commence par déterminer les distances entre chaque paire d'iris
+madistance <- dist(iris[,1:4],method = "euclidean")
+madistance <- as.matrix(madistance)
+#on fait le clustreing hiérarchique
+clustering <- as.dendrogram(hclust(as.dist(madistance)))
+
+#on demande le dendrogramme
+plot(clustering) 
+#on ne voit pas grand chose. Il serait intéressant de mettre les noms des espèces plutôt que les numéros, et de 
+
+#donnez une couleur pour chaque espèce.
+colors_to_use <- as.numeric(iris[,5])
+#donnez un label avec des couleurs pour chaque espèce
+labels_colors(clustering) <- colors_to_use
+
+plot(clustering)
+
+
+
+##################################################################################################################
+# (i) On peut aussi vouloir mettre des couleurs en fonction du clustering, pour les voir apparaître plus facilement. On voit
+# ici sur le dendrogramme qu'il pourrait être intéressant de regarder le découpega en deux clusters :
+# on demande donc de découper à 2 parties
+clus_labels <- color_labels(clustering, k=2)
+
+#si vous executez "clus_labels" il vous donnera la hauteur à laquelle le dendrogramme fusionne en deux parties.
+
+#on fait un plot de cette liste
+
+plot(clus_labels, main ="iris avec couleurs pour 2 parties")
+
+
+##################################################################################################################
+# (j) Représentez le résultat obtenu par le clustering hiérarchique du point $h$ avec 3 clusters dans le 
+# plan des deux axes principaux.
+
+# On commence par prendre les labels correspondant au clustering en 3 clusters :
+clus_labels <- cutree(clustering, k=3)
+
+
+#on reprend les coordonnées de l'ACP et on fait le plot des individus suivant ces deux coordonnées (entrées 6 et 7 dans "iris")
+# et en ajoutant des couleurs en fonction des clusters
+plot(iris[,"Dim.1"], iris[,"Dim.2"], xlab = "DIM 1 de l'ACP", ylab = "DIM 2 de l'ACP", col = clus_labels, pch = as.numeric(iris[,5]))
+
+

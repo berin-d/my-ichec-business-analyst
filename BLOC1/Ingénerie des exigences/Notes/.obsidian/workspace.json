@@ -214,16 +214,22 @@
       "daily-notes:Ouvrir la note quotidienne": false,
       "templates:Insérer le modèle": false,
       "command-palette:Ouvrir la palette de commandes": false,
-      "bases:Créer une nouvelle base": false
+      "bases:Créer une nouvelle base": false,
+      "callout-manager:Insert Callout": false,
+      "obsidian-excalidraw-plugin:New drawing": false
     }
   },
   "active": "f4312e5da927e439",
   "lastOpenFiles": [
     "1 - Business analyst/4 - Ingénerie logicielle.md",
-    "1 - Business analyst/5 - Définition IE et taxonomie.md",
     "1 - Business analyst/3 - Processsus de la BA.md",
-    "1 - Business analyst/2 - Role du business analyst.md",
+    "Pasted image 20260928140031.png",
+    "Pasted image 20260928135920.png",
+    "Pasted image 20260928135836.png",
+    "Pasted image 20260928135327.jpg",
     "1 - Business analyst/1 - Définitions de la BA.md",
+    "1 - Business analyst/2 - Role du business analyst.md",
+    "1 - Business analyst/5 - Définition IE et taxonomie.md",
     "Pasted image 20260919120629.png",
     "1 - Business analyst/Synthèse.md",
     "1 - Business analyst"

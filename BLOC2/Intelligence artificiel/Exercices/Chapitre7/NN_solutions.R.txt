@@ -1,0 +1,95 @@
+################################################################################
+# Neural Networks (Perceptron)
+# =========================================
+################################################################################
+# Inspiration :
+#https://datascienceplus.com/neuralnet-train-and-test-neural-networks-using-r/
+
+# Get the data
+setwd("C:/Users/YVOG/OneDrive - ICHEC/Documents/22BA032-A/Partie 4 Réseaux neuronaux")
+mydata <- read.csv("dividendinfo.csv")
+# In this dataset we assign a value of 1 to a stock that pays a dividend.
+# We assign a value of 0 to a stock that does not pay a dividend. 
+# Independent variables are as follows:
+# - fcfps: Free cash flow per share (in $)
+# - earnings_growth: Earnings growth in the past year (in %)
+# - de: Debt to Equity ratio
+# - mcap: Market Capitalization of the stock
+# - current_ratio: Current Ratio (or Current Assets/Current Liabilities)
+
+
+
+#Scale the data
+scaleddata<-scale(mydata)
+
+# Normalize the data
+normalize <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x)))
+}
+maxmindf <- as.data.frame(lapply(mydata, normalize))
+
+# Training and Test Data
+trainset <- maxmindf[1:160, ]
+testset <- maxmindf[161:200, ]
+
+softplus <- function(x) log(1+exp(x))
+
+#Build Neural Network
+#install.packages("neuralnet")
+library(neuralnet)
+nn <- neuralnet(dividend ~ ., 
+                data=trainset, hidden=c(2,1), linear.output=FALSE, stepmax=2000,
+                act.fct=softplus)
+nn <- neuralnet(dividend ~ ., 
+                data=trainset, hidden=c(2,3,1), linear.output=FALSE, 
+                threshold=0.01, algorithm="backprop", learningrate=0.005,
+                act.fct=softplus)
+nn <- neuralnet(dividend ~ ., 
+                data=trainset, hidden=c(2,1), linear.output=FALSE, stepmax=10000,
+                act.fct="logistic")
+# Results
+nn$result.matrix
+plot(nn)
+
+#Test the resulting output
+nn.results <- compute(nn,  testset[,-1])
+results <- data.frame(actual = testset$dividend, prediction = nn.results$net.result)
+results
+#Round results
+roundedresults<-sapply(results,round,digits=0)
+roundedresultsdf=data.frame(roundedresults)
+# Compute confusion Matrix
+confMat<-table(roundedresultsdf$actual,roundedresultsdf$prediction)
+confMat
+sum(diag(confMat))/sum(confMat)
+
+#Exercise : Compare the network just built with previous methods 
+#           using the caret package
+
+#Exercise : Build a NN for the credit defaults dataset and compare 
+#           with  knn, naive bayes, svm, and C4.5 trees 
+
+
+library(caret)
+mydata<-maxmindf
+mydata<- data.frame(Class=as.factor(mydata[,1]), maxmindf[,-1])
+colClass<- 1
+ctrl <- trainControl(method = "cv", number = 10,verboseIter = TRUE)
+svmModel<-train(y=mydata$Class, x=mydata[,-colClass],method = "svmLinear", trControl=ctrl, verbose=TRUE)
+knnModel<-train(y=mydata$Class, x=mydata[,-colClass],method = "kknn", trControl=ctrl)
+treeModel <-train(y=mydata$Class, x=mydata[,-colClass],method = "J48", trControl=ctrl)
+naivebayesModel <-train(y=mydata$Class, x=mydata[,-colClass],method = "naive_bayes", trControl=ctrl)
+NB2Model<-train(y=mydata$Class, x=mydata[,-colClass],method = "nb", trControl=ctrl)
+MDAModel<-train(y=mydata$Class, x=mydata[,-colClass],method = "mda", trControl=ctrl)
+NNModel<-train(y=mydata$Class, x=mydata[,-colClass],method = "nnet", trControl=ctrl)
+
+
+results <- resamples(list(SVM=svmModel, 
+                          KNN=knnModel, TREE=treeModel, 
+                          NAIVE=naivebayesModel,
+                          NB2=NB2Model,
+                          MDA=MDAModel,
+                          NN=NNModel))
+summary(results)
+bwplot(results)
+dotplot(results)
