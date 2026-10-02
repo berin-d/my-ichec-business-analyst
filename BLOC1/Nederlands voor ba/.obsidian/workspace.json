@@ -1,37 +1,70 @@
 {
   "main": {
-    "id": "f608e9e0786c15f6",
+    "id": "2be2de51a5966e56",
     "type": "split",
     "children": [
       {
-        "id": "17ed166be2a31c32",
+        "id": "8b9ba2d5301c268c",
         "type": "tabs",
         "children": [
           {
-            "id": "076ddfec120baa22",
+            "id": "035d121f1b2c90b1",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "verbes/Commun.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Nouvel onglet"
+              "title": "Commun"
+            }
+          },
+          {
+            "id": "c181e9f8e3492b7c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/Introduction.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Introduction"
+            }
+          },
+          {
+            "id": "017be7c6fedcafb0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "huiswerk/TP-1.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "TP-1"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "f26aee68dd4a16a7",
+    "id": "c29a9d9d1708d400",
     "type": "split",
     "children": [
       {
-        "id": "7e6fd4457f6d5bfb",
+        "id": "2f153cf89eb9cb42",
         "type": "tabs",
         "children": [
           {
-            "id": "863328273e512a60",
+            "id": "d36b8b8789baf385",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -46,7 +79,7 @@
             }
           },
           {
-            "id": "2311bfb6f43765f5",
+            "id": "d006bfb9594996a1",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -63,7 +96,7 @@
             }
           },
           {
-            "id": "f8b83e3087782019",
+            "id": "76a42d4fa1bdfdcf",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -82,19 +115,20 @@
     "width": 300
   },
   "right": {
-    "id": "3ea18948d02ed188",
+    "id": "10bd1c8e884f6274",
     "type": "split",
     "children": [
       {
-        "id": "a913fb8579ffaa50",
+        "id": "d0177eb03249c7b0",
         "type": "tabs",
         "children": [
           {
-            "id": "11d5da888a091d5c",
+            "id": "6834dd9d9e323998",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
+                "file": "huiswerk/TP-1.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -108,11 +142,12 @@
             }
           },
           {
-            "id": "5454b820a8d55e66",
+            "id": "68b6d962ecffba5b",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "huiswerk/TP-1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -121,7 +156,7 @@
             }
           },
           {
-            "id": "7b6826a10796aced",
+            "id": "f6bbd5ef3912c205",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -136,7 +171,7 @@
             }
           },
           {
-            "id": "a7e7b6713e97f0c4",
+            "id": "98387cb3c20a75f5",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -150,11 +185,12 @@
             }
           },
           {
-            "id": "eb0018d97610d5ea",
+            "id": "b04f7c97561aff6b",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
+                "file": "huiswerk/TP-1.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -181,6 +217,16 @@
       "bases:Créer une nouvelle base": false
     }
   },
-  "active": "076ddfec120baa22",
-  "lastOpenFiles": []
+  "active": "017be7c6fedcafb0",
+  "lastOpenFiles": [
+    "notes/Introduction.md",
+    "huiswerk/TP-1.md",
+    "Sans titre 1.md",
+    "SYLLABUS 2025-26.pdf",
+    "verbes/Commun.md",
+    "notes",
+    "verbes",
+    "vocabulaire",
+    "huiswerk"
+  ]
 }
