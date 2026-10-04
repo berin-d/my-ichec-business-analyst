@@ -1,70 +1,56 @@
 {
   "main": {
-    "id": "2be2de51a5966e56",
+    "id": "8eeeb1e0578435e6",
     "type": "split",
     "children": [
       {
-        "id": "8b9ba2d5301c268c",
+        "id": "4ecf3248bdc88ba1",
         "type": "tabs",
         "children": [
           {
-            "id": "035d121f1b2c90b1",
+            "id": "6e6611229093264a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "verbes/Commun.md",
+                "file": "Introduction/1 - Notions générales/3 - Domaine de performance.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Commun"
+              "title": "3 - Domaine de performance"
             }
           },
           {
-            "id": "c181e9f8e3492b7c",
+            "id": "133e865c5ebf59b5",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/Introduction.md",
+                "file": "2 - Gestion de projet/5 - La gestion des délais.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Introduction"
-            }
-          },
-          {
-            "id": "017be7c6fedcafb0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "vocabulaire/phrases.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "phrases"
+              "title": "5 - La gestion des délais"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "c29a9d9d1708d400",
+    "id": "08d97e1ce2ac6730",
     "type": "split",
     "children": [
       {
-        "id": "2f153cf89eb9cb42",
+        "id": "c1cbaa14f46bb50e",
         "type": "tabs",
         "children": [
           {
-            "id": "d36b8b8789baf385",
+            "id": "9351d9fa5c9cf000",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -79,7 +65,7 @@
             }
           },
           {
-            "id": "d006bfb9594996a1",
+            "id": "d3c571172fab32ae",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -96,14 +82,11 @@
             }
           },
           {
-            "id": "76a42d4fa1bdfdcf",
+            "id": "7c5431be88aab0c1",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {
-                "showSearch": false,
-                "searchQuery": ""
-              },
+              "state": {},
               "icon": "lucide-bookmark",
               "title": "Signets"
             }
@@ -115,20 +98,20 @@
     "width": 300
   },
   "right": {
-    "id": "10bd1c8e884f6274",
+    "id": "a72da630f5e339db",
     "type": "split",
     "children": [
       {
-        "id": "d0177eb03249c7b0",
+        "id": "a49aaa3694bb6c5f",
         "type": "tabs",
         "children": [
           {
-            "id": "6834dd9d9e323998",
+            "id": "b1de65728bf3a3c6",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "huiswerk/TP-1.md",
+                "file": "Introduction/1 - Notions générales/3 - Domaine de performance.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -138,25 +121,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Rétroliens"
+              "title": "Rétrolien pour 3 - Domaine de performance"
             }
           },
           {
-            "id": "68b6d962ecffba5b",
+            "id": "ff06a3bc7df98123",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "huiswerk/TP-1.md",
+                "file": "Introduction/1 - Notions générales/3 - Domaine de performance.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Liens sortants"
+              "title": "Liens sortants de 3 - Domaine de performance"
             }
           },
           {
-            "id": "f6bbd5ef3912c205",
+            "id": "3badf44476d42af6",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -171,7 +154,7 @@
             }
           },
           {
-            "id": "98387cb3c20a75f5",
+            "id": "c898a4fafd1b893f",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -185,18 +168,18 @@
             }
           },
           {
-            "id": "b04f7c97561aff6b",
+            "id": "ace5b57553ecc3cc",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "huiswerk/TP-1.md",
+                "file": "Introduction/1 - Notions générales/3 - Domaine de performance.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Plan"
+              "title": "Plan de 3 - Domaine de performance"
             }
           }
         ]
@@ -214,24 +197,40 @@
       "daily-notes:Ouvrir la note quotidienne": false,
       "templates:Insérer le modèle": false,
       "command-palette:Ouvrir la palette de commandes": false,
-      "bases:Créer une nouvelle base": false
+      "bases:Créer une nouvelle base": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "callout-manager:Insert Callout": false
     }
   },
-  "active": "017be7c6fedcafb0",
+  "active": "133e865c5ebf59b5",
   "lastOpenFiles": [
-    "verbes/Commun.md",
-    "vocabulaire/phrases.md",
-    "vocabulaire/word.md",
-    "huiswerk/TP-2.md",
-    "notes/Introduction.md",
-    "huiswerk/TP-1.md",
-    "vocabulaire",
-    "Sans titre.md",
-    "Sans titre 1.md",
-    "SYLLABUS 2025-26.pdf",
-    "notes",
-    "verbes",
-    "vocabulaire",
-    "huiswerk"
+    "2 - Gestion de projet/4 - La gestion du contenu.md",
+    "2 - Gestion de projet/3 - La gestion de l'intégration.md",
+    "2 - Gestion de projet/5 - La gestion des délais.md",
+    "wbs-decoupage-produit.png.webp",
+    "Pasted image 20261003101122.jpg",
+    "1 - Introduction/5 - La diversité des approches/Introduction.md",
+    "1 - Introduction/4 - Sociabilite etique/Social - etique.md",
+    "1 - Introduction/3 - L'environnement/L'environnement de projet et son influence.md",
+    "1 - Introduction/1 - Notions générales/4 - Produits & Programmes.md",
+    "1 - Introduction/1 - Notions générales/3 - Domaine de performance.md",
+    "1 - Introduction/1 - Notions générales/2 - Principes.md",
+    "1 - Introduction/1 - Notions générales/1 - Notions générales.md",
+    "2 - Gestion de projet/1 - Les parties prenantes.md",
+    "1 - Introduction/0 - Introduction.md",
+    "2 - Gestion de projet/2 - La gestion des équipes.md",
+    "Pasted image 20260921064737.png",
+    "Pasted image 20260920130101.png",
+    "2 - Gestion de projet",
+    "1 - Introduction/5 - La diversité des approches",
+    "1 - Introduction/4 - Sociabilite etique",
+    "Introduction/1 - Notions générales/Notions générales.md",
+    "Introduction/2 - Produit & Programmes/Notions.md",
+    "Introduction/3 - L'environnement/Organisation.md",
+    "1 - Introduction/3 - L'environnement",
+    "Introduction/1 - Notions générales/Principes.md",
+    "Introduction/2 - Produit & Programmes",
+    "1 - Introduction/1 - Notions générales",
+    "1 - Introduction"
   ]
 }

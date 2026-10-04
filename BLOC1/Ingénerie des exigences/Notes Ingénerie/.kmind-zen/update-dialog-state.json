@@ -1,0 +1,28 @@
+{
+  "initialized": {
+    "obsidian": true
+  },
+  "lastObservedVersion": {
+    "obsidian": "0.34.0"
+  },
+  "readVersions": {
+    "updateDialog.readVersion.obsidian.0.34.0": true
+  },
+  "pendingReminderVersion": {
+    "obsidian": "0.34.0"
+  },
+  "noticeExposed": {},
+  "noticeClicked": {},
+  "tutorialExposed": {
+    "updateDialog.tutorial.exposed.obsidian.a1205862-09e9-47f2-a583-544d46335670": true,
+    "updateDialog.tutorial.exposed.obsidian.5708962f-75eb-4041-a468-465a25f1aa2e": true,
+    "updateDialog.tutorial.exposed.obsidian.c4e11f02-982c-4752-89cd-a0c1010c3bd4": true,
+    "updateDialog.tutorial.exposed.obsidian.c0b1e6b2-725a-43e2-afa2-3cebf6190a6f": true,
+    "updateDialog.tutorial.exposed.obsidian.8d7d9936-4b6b-4327-b850-ec44f3b7174d": true,
+    "updateDialog.tutorial.exposed.obsidian.c49d08e9-efaa-4d56-b182-dfd55e7a60ba": true,
+    "updateDialog.tutorial.exposed.obsidian.c6f700f2-8546-498b-b197-640fd0501cf2": true,
+    "updateDialog.tutorial.exposed.obsidian.66dcce91-caec-4bc2-b814-c4a564aa9c63": true,
+    "updateDialog.tutorial.exposed.obsidian.4ac10793-31f7-4586-8776-d83014805135": true
+  },
+  "tutorialClicked": {}
+}

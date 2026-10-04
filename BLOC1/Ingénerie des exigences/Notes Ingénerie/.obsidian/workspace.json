@@ -1,70 +1,84 @@
 {
   "main": {
-    "id": "2be2de51a5966e56",
+    "id": "9651733bc92a6086",
     "type": "split",
     "children": [
       {
-        "id": "8b9ba2d5301c268c",
+        "id": "deb8c5a99988ef8c",
         "type": "tabs",
         "children": [
           {
-            "id": "035d121f1b2c90b1",
+            "id": "e0fdf134e0708a01",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "verbes/Commun.md",
+                "file": "1 - Business analyst/1 - Définitions de la BA.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Commun"
+              "title": "1 - Définitions de la BA"
             }
           },
           {
-            "id": "c181e9f8e3492b7c",
+            "id": "821fcc827d6aff34",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/Introduction.md",
+                "file": "1 - Business analyst/2 - Role du business analyst.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Introduction"
+              "title": "2 - Role du business analyst"
             }
           },
           {
-            "id": "017be7c6fedcafb0",
+            "id": "f4312e5da927e439",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "vocabulaire/phrases.md",
+                "file": "1 - Business analyst/Parcours_1/IEX03.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "phrases"
+              "title": "IEX03"
+            }
+          },
+          {
+            "id": "8e125209613248b0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1 - Business analyst/Parcours_1/IEX03.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "IEX03"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "c29a9d9d1708d400",
+    "id": "a413550e5d677256",
     "type": "split",
     "children": [
       {
-        "id": "2f153cf89eb9cb42",
+        "id": "fee5f03a1394f328",
         "type": "tabs",
         "children": [
           {
-            "id": "d36b8b8789baf385",
+            "id": "300bec3b9c9d17da",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -79,7 +93,7 @@
             }
           },
           {
-            "id": "d006bfb9594996a1",
+            "id": "1d5653d3e1db68a8",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -96,7 +110,7 @@
             }
           },
           {
-            "id": "76a42d4fa1bdfdcf",
+            "id": "6c2a4d8f9eb020fb",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -115,20 +129,20 @@
     "width": 300
   },
   "right": {
-    "id": "10bd1c8e884f6274",
+    "id": "379f4add3f485f8d",
     "type": "split",
     "children": [
       {
-        "id": "d0177eb03249c7b0",
+        "id": "cb0234e4074c0425",
         "type": "tabs",
         "children": [
           {
-            "id": "6834dd9d9e323998",
+            "id": "c6b26c7aa21cfe09",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "huiswerk/TP-1.md",
+                "file": "1 - Business analyst/Définition et enjeux.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -142,12 +156,12 @@
             }
           },
           {
-            "id": "68b6d962ecffba5b",
+            "id": "45811ca8bfd4d548",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "huiswerk/TP-1.md",
+                "file": "1 - Business analyst/Définition et enjeux.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -156,7 +170,7 @@
             }
           },
           {
-            "id": "f6bbd5ef3912c205",
+            "id": "a5ab501301333e9e",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -171,7 +185,7 @@
             }
           },
           {
-            "id": "98387cb3c20a75f5",
+            "id": "5ed05076d67a2cdf",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -185,12 +199,12 @@
             }
           },
           {
-            "id": "b04f7c97561aff6b",
+            "id": "123b144c0ec188e1",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "huiswerk/TP-1.md",
+                "file": "1 - Business analyst/Définition et enjeux.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -208,6 +222,8 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "callout-manager:Insert Callout": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
       "switcher:Ouvrir le sélecteur rapide": false,
       "graph:Ouvrir la vue graphique": false,
       "canvas:Créer une nouvelle toile": false,
@@ -217,21 +233,30 @@
       "bases:Créer une nouvelle base": false
     }
   },
-  "active": "017be7c6fedcafb0",
+  "active": "8e125209613248b0",
   "lastOpenFiles": [
-    "verbes/Commun.md",
-    "vocabulaire/phrases.md",
-    "vocabulaire/word.md",
-    "huiswerk/TP-2.md",
-    "notes/Introduction.md",
-    "huiswerk/TP-1.md",
-    "vocabulaire",
-    "Sans titre.md",
-    "Sans titre 1.md",
-    "SYLLABUS 2025-26.pdf",
-    "notes",
-    "verbes",
-    "vocabulaire",
-    "huiswerk"
+    "Untitled.limn",
+    "1 - Business analyst/Parcours_1/IEX03.md",
+    "1 - Business analyst/Parcours_1/Mind.limn",
+    "KMind/未命名 (3).kmindz",
+    "KMind/未命名 (2).kmindz",
+    "KMind/未命名.kmindz",
+    "KMind",
+    "2 - Ingénerie des exigences/notes.md",
+    "1 - Business analyst/Parcours_1",
+    "1 - Business analyst/5 - Définition IE et taxonomie.md",
+    "1 - Business analyst/4 - Ingénerie logicielle.md",
+    "1 - Business analyst/3 - Processsus de la BA.md",
+    "1 - Business analyst/2 - Role du business analyst.md",
+    "1 - Business analyst/1 - Définitions de la BA.md",
+    "Image/Pasted image 20260928140031.png",
+    "Image/Pasted image 20260928135920.png",
+    "Image",
+    "2 - Ingénerie des exigences",
+    "Image/Pasted image 20260928135836.png",
+    "Image/Pasted image 20260928135327.jpg",
+    "Image/Pasted image 20260919120629.png",
+    "1 - Business analyst/Synthèse.md",
+    "1 - Business analyst"
   ]
 }
