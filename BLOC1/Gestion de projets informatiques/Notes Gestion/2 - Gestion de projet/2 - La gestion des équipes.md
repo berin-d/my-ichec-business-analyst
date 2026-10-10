@@ -30,7 +30,9 @@ Dans un environnement numérique à flux rapide (_fast flow_), _Team Topologies_
 ### A. Principes fondateurs
 
 - **Loi de Conway :** La structure des systèmes/logiciels développés reflète la structure de communication de l'organisation qui les conçoit.
-    
+	
+    ![[article-conway-2.webp]]
+	
 - **Loi de Conway Inversée :** Organiser intentionnellement les équipes en fonction de l'architecture logicielle visée (ex. : de petites équipes autonomes pour produire des micro-services).
     
 - **Charge cognitive (_Cognitive Load_) :** Quantité d'effort mental et d'informations nécessaires pour fonctionner. Pour éviter les dysfonctionnements, il faut limiter la responsabilité et le domaine d'une équipe afin d'en maintenir la charge cognitive à un niveau raisonnable.
